@@ -1,0 +1,293 @@
+/* ==========================================================================
+   Jeevika Map — Public Service Design System Tokens & Base Styles
+   Conforms to Indian Government Digital Public Platform Design Guidelines
+   ========================================================================== */
+
+:root {
+  /* Font scale controlled via Top Accessibility Bar */
+  --font-scale: 1;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Color System — White Dominant Public Sector Palette */
+  --bg-page: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-muted: #f1f5f9;
+  --bg-tag: #e2e8f0;
+
+  /* Text & Readability (WCAG AAA) */
+  --text-primary: #0f172a;       /* Deep slate navy */
+  --text-secondary: #334155;     /* Charcoal slate */
+  --text-muted: #64748b;         /* Subdued slate */
+  --text-inverse: #ffffff;
+
+  /* Restrained National Accents */
+  --saffron-primary: #c2410c;     /* Deep India Saffron */
+  --saffron-hover: #9a3412;
+  --saffron-subtle: #fff7ed;
+  --saffron-border: #fed7aa;
+
+  --green-primary: #15803d;       /* India Green */
+  --green-hover: #166534;
+  --green-subtle: #f0fdf4;
+  --green-border: #bbf7d0;
+
+  --navy-primary: #0c2340;        /* Ashoka Deep Navy */
+  --navy-light: #1e3a8a;
+  --navy-subtle: #eff6ff;
+  --navy-border: #bfdbfe;
+
+  /* Structure & Borders */
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-strong: #94a3b8;
+
+  /* Shadows — Restrained Government Elevation */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --shadow-card-3d: 0 20px 30px -10px rgba(12, 35, 64, 0.12), 0 8px 12px -4px rgba(12, 35, 64, 0.06);
+
+  /* Layout Boundaries */
+  --container-max: 1240px;
+  --header-height: 74px;
+  --topbar-height: 38px;
+}
+
+/* High Contrast Mode (Accessible Public Sector Standard) */
+body.high-contrast {
+  --bg-page: #000000;
+  --bg-surface: #121212;
+  --bg-subtle: #1e1e1e;
+  --bg-muted: #2d2d2d;
+  --bg-tag: #3a3a3a;
+
+  --text-primary: #ffffff;
+  --text-secondary: #f3f4f6;
+  --text-muted: #d1d5db;
+  --text-inverse: #000000;
+
+  --border-light: #ffffff;
+  --border-medium: #e5e7eb;
+  --border-strong: #ffffff;
+
+  --saffron-primary: #ff9933;
+  --saffron-subtle: #3a2200;
+  --saffron-border: #ff9933;
+
+  --green-primary: #22c55e;
+  --green-subtle: #052e16;
+  --green-border: #22c55e;
+
+  --navy-primary: #60a5fa;
+  --navy-subtle: #172554;
+  --navy-border: #60a5fa;
+
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-card-3d: 0 0 0 2px #ffffff;
+}
+
+/* Base Reset & Core Typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: calc(16px * var(--font-scale));
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Accessibility: Skip to Main Content */
+.sr-skip-link {
+  position: absolute;
+  top: -999px;
+  left: 16px;
+  background: var(--navy-primary);
+  color: #ffffff;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 10000;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  border: 2px solid #ffffff;
+}
+
+.sr-skip-link:focus {
+  top: 0;
+}
+
+/* Standard Links & Headings */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+/* Container Utility */
+.jm-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@media (max-width: 640px) {
+  .jm-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* Badge Utilities */
+.jm-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.jm-badge-saffron {
+  background-color: var(--saffron-subtle);
+  color: var(--saffron-primary);
+  border: 1px solid var(--saffron-border);
+}
+
+.jm-badge-green {
+  background-color: var(--green-subtle);
+  color: var(--green-primary);
+  border: 1px solid var(--green-border);
+}
+
+.jm-badge-navy {
+  background-color: var(--navy-subtle);
+  color: var(--navy-primary);
+  border: 1px solid var(--navy-border);
+}
+
+.jm-badge-neutral {
+  background-color: var(--bg-muted);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+
+/* Buttons */
+.jm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 14.5px;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.jm-btn-primary {
+  background-color: var(--navy-primary);
+  color: #ffffff;
+  border: 1px solid var(--navy-primary);
+}
+
+.jm-btn-primary:hover {
+  background-color: #081a30;
+  border-color: #081a30;
+  box-shadow: 0 4px 12px rgba(12, 35, 64, 0.18);
+}
+
+.jm-btn-secondary {
+  background-color: #ffffff;
+  color: var(--navy-primary);
+  border: 1px solid var(--border-medium);
+}
+
+.jm-btn-secondary:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--navy-primary);
+}
+
+.jm-btn-saffron {
+  background-color: var(--saffron-primary);
+  color: #ffffff;
+  border: 1px solid var(--saffron-primary);
+}
+
+.jm-btn-saffron:hover {
+  background-color: var(--saffron-hover);
+  border-color: var(--saffron-hover);
+}
+
+/* Subtle 3D Perspective Canvas */
+.perspective-stage {
+  perspective: 1100px;
+  perspective-origin: 50% 50%;
+}
+
+.card-3d-deck {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animations with Respect to Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card-3d-deck {
+    transform: none !important;
+  }
+}
+

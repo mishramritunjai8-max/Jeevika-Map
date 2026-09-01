@@ -1,0 +1,16 @@
+# ==============================================================================
+# Supabase Local Configuration for Jeevika Map
+# ==============================================================================
+
+project_id = "jeevika-map"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+
+[db]
+port = 54322
+
+[functions.generate-recommendations]
+verify_jwt = false
