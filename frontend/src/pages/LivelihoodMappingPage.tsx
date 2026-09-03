@@ -10,6 +10,7 @@ import { Step6Location } from '../components/mapping/Step6Location';
 import { Step7Constraints } from '../components/mapping/Step7Constraints';
 import { Step8Aspirations } from '../components/mapping/Step8Aspirations';
 import { StepReview } from '../components/mapping/StepReview';
+import { VoiceAssistantPanel } from '../components/mapping/VoiceAssistantPanel';
 import {
   INITIAL_BENEFICIARY_DATA,
   type BeneficiaryFormData,
@@ -290,6 +291,14 @@ export const LivelihoodMappingPage: React.FC = () => {
           />
         </div>
       </div>
+
+      {/* Voice Assistant Panel */}
+      <VoiceAssistantPanel
+        formData={formData}
+        setFormData={setFormData}
+        currentStep={currentStep}
+        setCurrentStep={setCurrentStep}
+      />
 
       {/* Step Content Container */}
       <div
