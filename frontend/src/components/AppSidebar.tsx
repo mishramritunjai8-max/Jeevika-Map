@@ -14,9 +14,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ isOpen, onCloseMobile })
     {
       to: '/mapping',
       step: '01',
-      stage: 'Discover',
-      label: 'Livelihood Mapping',
-      sublabel: 'Cluster & Trade Survey',
+      stage: 'खोजें (Discover)',
+      label: 'आजीविका मैपिंग',
+      sublabel: 'Livelihood Mapping • सर्वेक्षण',
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
@@ -28,9 +28,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ isOpen, onCloseMobile })
     {
       to: '/profile',
       step: '02',
-      stage: 'Understand',
-      label: 'Beneficiary Profile',
-      sublabel: 'Informal Skills & Baseline',
+      stage: 'समझें (Understand)',
+      label: 'लाभार्थी प्रोफाइल',
+      sublabel: 'Beneficiary Dossier • हुनर',
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -41,9 +41,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ isOpen, onCloseMobile })
     {
       to: '/opportunities',
       step: '03',
-      stage: 'Demand',
-      label: 'Local Opportunities',
-      sublabel: 'District Value Chains',
+      stage: 'मांग (Demand)',
+      label: 'स्थानीय अवसर',
+      sublabel: 'Local Opportunities • क्लस्टर',
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
@@ -54,9 +54,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ isOpen, onCloseMobile })
     {
       to: '/recommendations',
       step: '04',
-      stage: 'Recommend',
-      label: 'Skill Recommendations',
-      sublabel: 'NSQF QP-NOS Matching',
+      stage: 'अनुशंसा (Recommend)',
+      label: 'कौशल अनुशंसाएं',
+      sublabel: 'Skill Recommendations • QP-NOS',
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="8" r="7" />
@@ -67,9 +67,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ isOpen, onCloseMobile })
     {
       to: '/action-plan',
       step: '05',
-      stage: 'Act',
-      label: 'Action Plan',
-      sublabel: 'PM-AJAY Grant & Linkage',
+      stage: 'कार्य (Act)',
+      label: 'कार्य योजना',
+      sublabel: 'Action Plan • PM-AJAY अनुदान',
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -122,10 +122,10 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ isOpen, onCloseMobile })
               marginBottom: '4px',
             }}
           >
-            PM-AJAY Workflow Pipeline
+            पीएम-अजय कार्यप्रवाह / Pipeline
           </div>
           <div style={{ fontSize: '13px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-            5-Stage Livelihood Framework
+            5-चरणीय आजीविका रूपरेखा (Framework)
           </div>
         </div>
 
@@ -209,10 +209,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ isOpen, onCloseMobile })
           }}
         >
           <div style={{ fontWeight: 700, color: isHighContrast ? '#ff9933' : '#0c2340', marginBottom: '4px' }}>
-            NCVET-NSQF Protocol
+            एनसीवीईटी-एनएसक्यूएफ प्रोटोकॉल / NCVET Standard
           </div>
-          All occupational records and skill gap matrices conform to Ministry of Skill Development
-          and Entrepreneurship (MSDE) Level 1–8 qualification standards.
+          सभी व्यावसायिक रिकॉर्ड एवं कौशल मानक कौशल विकास एवं उद्यमशीलता मंत्रालय (MSDE) लेवल 1–8 मानकों के अनुरूप हैं।
         </div>
       </div>
     </aside>

@@ -79,7 +79,7 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
               fontWeight: 500,
             }}
           >
-            Ministry of Social Justice & Empowerment (PM-AJAY)
+            सामाजिक न्याय एवं अधिकारिता मंत्रालय (पीएम-अजय) • Ministry of Social Justice & Empowerment
           </span>
         </div>
 
@@ -91,7 +91,7 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
             className="sr-skip-link"
             style={{ color: '#ffffff' }}
           >
-            Skip to Main Content
+            मुख्य सामग्री पर जाएँ (Skip to Main Content)
           </a>
 
           {/* Font Resizing Controls */}
@@ -105,7 +105,7 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
             }}
           >
             <span style={{ fontSize: '11px', color: isHighContrast ? '#d1d5db' : '#64748b', marginRight: '4px' }}>
-              Text Size:
+              अक्षर आकार / Text Size:
             </span>
             <button
               type="button"
@@ -187,7 +187,7 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
                 border: `1px solid ${isHighContrast ? '#ff9933' : '#cbd5e1'}`,
               }}
             />
-            {isHighContrast ? 'Standard View' : 'High Contrast'}
+            {isHighContrast ? 'सामान्य दृश्य (Standard)' : 'कंट्रास्ट दृश्य (Contrast)'}
           </button>
 
           {/* Language Selector */}

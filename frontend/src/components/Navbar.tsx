@@ -8,12 +8,12 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: 'Home', href: '#hero' },
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Livelihood Mapping', href: '#livelihood-mapping' },
-    { label: 'Skill Recommendations', href: '#skills' },
-    { label: 'Pilot Impact', href: '#impact-stats' },
-    { label: 'About PM-AJAY', href: '#about' },
+    { labelHi: 'होम', labelEn: 'Home', href: '#hero' },
+    { labelHi: 'यह कैसे काम करता है', labelEn: 'How It Works', href: '#how-it-works' },
+    { labelHi: 'आजीविका के अवसर', labelEn: 'Livelihood Pathways', href: '#skills' },
+    { labelHi: 'पायलट प्रभाव', labelEn: 'Pilot Impact', href: '#impact-stats' },
+    { labelHi: 'हमारे बारे में', labelEn: 'About PM-AJAY', href: '#about' },
+    { labelHi: 'अधिकारी पोर्टल', labelEn: 'Officer Portal', href: '/officer/login' },
   ];
 
   return (
@@ -148,7 +148,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
                 fontWeight: 500,
               }}
             >
-              Livelihood Intelligence & NSQF Skilling Portal
+              आजीविका एवं एनएसक्यूएफ कौशल पोर्टल / Livelihood Intelligence Portal
             </p>
           </div>
         </a>
@@ -160,7 +160,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
           style={{
             display: 'none',
             alignItems: 'center',
-            gap: '24px',
+            gap: '20px',
           }}
           className="desktop-nav"
         >
@@ -169,12 +169,17 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
               key={link.href}
               href={link.href}
               style={{
-                fontSize: '14.5px',
-                fontWeight: 500,
+                fontSize: '13.5px',
+                fontWeight: 600,
                 color: isHighContrast ? '#f3f4f6' : '#334155',
-                padding: '8px 0',
+                padding: '6px 0',
                 position: 'relative',
                 transition: 'color 0.15s ease',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                lineHeight: 1.2,
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.color = isHighContrast ? '#ff9933' : '#c2410c';
@@ -183,7 +188,10 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
                 e.currentTarget.style.color = isHighContrast ? '#f3f4f6' : '#334155';
               }}
             >
-              {link.label}
+              <span>{link.labelHi}</span>
+              <span style={{ fontSize: '10px', color: isHighContrast ? '#9ca3af' : '#64748b', fontWeight: 500 }}>
+                {link.labelEn}
+              </span>
             </a>
           ))}
         </nav>
@@ -194,12 +202,15 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
             href="/mapping"
             className="jm-btn jm-btn-primary"
             style={{
-              padding: '9px 18px',
-              fontSize: '14px',
+              padding: '8px 16px',
+              fontSize: '13.5px',
               letterSpacing: '0.01em',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
             }}
           >
-            <span>Start Livelihood Mapping</span>
+            <span>आजीविका मैपिंग शुरू करें / Start Mapping</span>
             <svg
               width="15"
               height="15"
@@ -277,14 +288,19 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 style={{
-                  fontSize: '15px',
-                  fontWeight: 500,
+                  fontSize: '14.5px',
+                  fontWeight: 600,
                   color: isHighContrast ? '#ffffff' : '#1e293b',
                   padding: '8px 0',
                   borderBottom: `1px solid ${isHighContrast ? '#374151' : '#f1f5f9'}`,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  textDecoration: 'none',
                 }}
               >
-                {link.label}
+                <span>{link.labelHi}</span>
+                <span style={{ fontSize: '11px', color: '#64748b' }}>{link.labelEn}</span>
               </a>
             ))}
             <div style={{ paddingTop: '8px' }}>
@@ -292,9 +308,9 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
                 href="/mapping"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="jm-btn jm-btn-saffron"
-                style={{ width: '100%', boxSizing: 'border-box' }}
+                style={{ width: '100%', boxSizing: 'border-box', textAlign: 'center' }}
               >
-                Start Livelihood Mapping
+                आजीविका मैपिंग शुरू करें / Start Livelihood Mapping
               </a>
             </div>
           </div>

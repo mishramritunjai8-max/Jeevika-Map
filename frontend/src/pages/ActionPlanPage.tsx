@@ -20,9 +20,9 @@ export const ActionPlanPage: React.FC = () => {
       >
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span className="jm-badge jm-badge-green">Step 05 • Act</span>
+            <span className="jm-badge jm-badge-green">चरण 05 • कार्य योजना (Step 05 • Act)</span>
             <span style={{ fontSize: '11px', color: isHighContrast ? '#9ca3af' : '#64748b', fontWeight: 600 }}>
-              MANDATE CODE: PMAJAY-ACT-MOD-05
+              शासनादेश कोड: PMAJAY-ACT-MOD-05
             </span>
           </div>
           <span
@@ -36,7 +36,7 @@ export const ActionPlanPage: React.FC = () => {
               border: '1px solid #bbf7d0',
             }}
           >
-            Phase 1: Architecture Specification
+            आर्किटेक्चर विशिष्टता
           </span>
         </div>
 
@@ -48,16 +48,15 @@ export const ActionPlanPage: React.FC = () => {
             marginBottom: '4px',
           }}
         >
-          PM-AJAY Convergence & Enterprise Action Plan
+          पीएम-अजय अभिसरण एवं उद्यम कार्य योजना
         </h1>
         <div style={{ fontSize: '13.5px', color: isHighContrast ? '#ff9933' : '#c2410c', fontWeight: 600, marginBottom: '12px' }}>
-          पीएम-अजय अभिसरण एवं उद्यम कार्य योजना
+          PM-AJAY Convergence & Enterprise Action Plan
         </div>
 
         <p style={{ fontSize: '14px', lineHeight: 1.6, color: isHighContrast ? '#e5e7eb' : '#475569', margin: 0 }}>
-          Translates skills and market opportunities into tangible financial and administrative actions.
-          Unlocks direct capital subsidies, modernized toolkit distributions, credit linkages via
-          NSFDC/mudra, and post-certification placement tracking under PM-AJAY guidelines.
+          कौशल और बाजार के अवसरों को वास्तविक वित्तीय एवं प्रशासनिक कदमों में परिवर्तित करता है।
+          सीधी पूंजीगत सब्सिडी, आधुनिक टूलकिट वितरण, NSFDC/मुद्रा ऋण लिंकेज और प्रमाणन उपरांत आय निगरानी सुनिश्चित करता है।
         </p>
       </div>
 
@@ -87,16 +86,16 @@ export const ActionPlanPage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              1. PM-AJAY Capital & Toolkits
+              1. पीएम-अजय टूलकिट एवं अनुदान (Capital & Toolkits)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Direct financial support for equipment acquisition and working capital:
+            उपकरण खरीद एवं कार्यशील पूंजी हेतु प्रत्यक्ष वित्तीय सहायता:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>Up to ₹50,000 subsidy per beneficiary for standardized professional toolkits</li>
-            <li>Direct Benefit Transfer (DBT) integration with Aadhaar-linked accounts</li>
-            <li>Concessional credit linkage via National Scheduled Castes Finance & Development Corp (NSFDC)</li>
+            <li>मानकीकृत व्यावसायिक टूलकिट हेतु प्रति लाभार्थी ₹50,000 तक की सब्सिडी</li>
+            <li>आधार लिंक बैंक खातों में प्रत्यक्ष लाभ अंतरण (DBT)</li>
+            <li>राष्ट्रीय अनुसूचित जाति वित्त एवं विकास निगम (NSFDC) से रियायती ऋण</li>
           </ul>
         </div>
 
@@ -119,16 +118,16 @@ export const ActionPlanPage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              2. SHG & Enterprise Incubation
+              2. स्वयं सहायता समूह एवं उद्यम इनक्यूबेशन (SHG Incubation)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Organizing individual beneficiaries into sustainable producer cooperatives:
+            व्यक्तिगत लाभार्थियों को टिकाऊ उत्पादक सहकारी समितियों में संगठित करना:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>Access to PM-AJAY funded Common Facility Centres (CFC)</li>
-            <li>Bulk procurement of quality raw materials to lower production costs</li>
-            <li>Branding, packaging & regional cooperative formation</li>
+            <li>पीएम-अजय वित्तपोषित साझा सुविधा केंद्रों (CFC) तक पहुंच</li>
+            <li>उत्पादन लागत कम करने हेतु थोक कच्चा माल खरीद</li>
+            <li>ब्रांडिंग, पैकेजिंग एवं क्षेत्रीय सहकारी विपणन लिंकेज</li>
           </ul>
         </div>
 
@@ -148,16 +147,16 @@ export const ActionPlanPage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              3. Milestone Audit & Tracking
+              3. मील के पत्थर एवं आय निगरानी (Tracking)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Rigorous post-intervention livelihood delta tracking:
+            प्रशिक्षण व सहायता के पश्चात वास्तविक आजीविका सुधार की समयबद्ध निगरानी:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>3-month, 6-month, and 12-month post-skilling income verification</li>
-            <li>Validation of continuous enterprise operations</li>
-            <li>Grievance redressal & supplemental upskilling pathways</li>
+            <li>3-माह, 6-माह एवं 12-माह उपरांत आय सत्यापन</li>
+            <li>उद्यम संचालन की निरंतरता का क्षेत्रीय सत्यापन</li>
+            <li>शिकायत निवारण एवं पूरक कौशल विकास अवसर</li>
           </ul>
         </div>
       </div>
@@ -180,10 +179,10 @@ export const ActionPlanPage: React.FC = () => {
           <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M15 10H5M9 14l-4-4 4-4" />
           </svg>
-          <span>Back to Skill Recommendations</span>
+          <span>कौशल अनुशंसाओं पर वापस जाएँ (Back to Recommendations)</span>
         </Link>
         <Link to="/mapping" className="jm-btn jm-btn-primary">
-          <span>Start New Livelihood Assessment</span>
+          <span>नया आजीविका मूल्यांकन शुरू करें (Start New Assessment)</span>
           <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 10h10M11 6l4 4-4 4" />
           </svg>

@@ -285,7 +285,7 @@ export const StepReview: React.FC<StepReviewProps> = ({
             </>
           ) : (
             <>
-              <span>Generate My Livelihood Profile (प्रोफाइल तैयार करें)</span>
+              <span>मेरी आजीविका प्रोफाइल बनाएं / Generate My Profile</span>
               <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 10h10M11 6l4 4-4 4" />
               </svg>

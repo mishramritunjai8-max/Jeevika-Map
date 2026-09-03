@@ -21,15 +21,15 @@ const LOCAL_STORAGE_DRAFT_KEY = 'jeevika_mapping_draft';
 const LOCAL_STORAGE_PROFILE_KEY = 'jeevika_beneficiary_profile';
 
 const STEP_TITLES = [
-  { step: 1, titleHi: 'मूलभूत जानकारी', titleEn: 'Basic Information' },
-  { step: 2, titleHi: 'वर्तमान कौशल', titleEn: 'Existing Skills' },
-  { step: 3, titleHi: 'कार्य अनुभव', titleEn: 'Work Experience' },
-  { step: 4, titleHi: 'आजीविका रुचि', titleEn: 'Livelihood Interests' },
-  { step: 5, titleHi: 'शिक्षा एवं साक्षरता', titleEn: 'Education' },
-  { step: 6, titleHi: 'स्थान एवं क्षेत्र', titleEn: 'Location' },
-  { step: 7, titleHi: 'सीमाएं एवं उपलब्धता', titleEn: 'Constraints' },
-  { step: 8, titleHi: 'भविष्य की आकांक्षाएं', titleEn: 'Aspirations' },
-  { step: 9, titleHi: 'समीक्षा एवं पुष्टि', titleEn: 'Review & Verification' },
+  { step: 1, titleHi: '1. मूलभूत जानकारी', titleEn: 'Basic Information' },
+  { step: 2, titleHi: '2. वर्तमान कौशल एवं औजार', titleEn: 'Existing Skills & Tools' },
+  { step: 3, titleHi: '3. कार्य अनुभव एवं आय', titleEn: 'Work Experience & Current Income' },
+  { step: 4, titleHi: '4. आजीविका रुचि एवं क्षेत्र', titleEn: 'Livelihood Sectors of Interest' },
+  { step: 5, titleHi: '5. शिक्षा एवं डिजिटल साक्षरता', titleEn: 'Education & Digital Literacy' },
+  { step: 6, titleHi: '6. स्थान एवं क्षेत्र विवरण', titleEn: 'Location & Geography' },
+  { step: 7, titleHi: '7. सीमाएं एवं आवागमन दूरी', titleEn: 'Constraints & Mobility Range' },
+  { step: 8, titleHi: '8. भविष्य की आकांक्षाएं एवं टूलकिट', titleEn: 'Future Aspirations & Toolkits' },
+  { step: 9, titleHi: '9. समीक्षा एवं अंतिम पुष्टि', titleEn: 'Review & Verification' },
 ];
 
 export const LivelihoodMappingPage: React.FC = () => {
@@ -431,12 +431,12 @@ export const LivelihoodMappingPage: React.FC = () => {
             <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M15 10H5M9 14l-4-4 4-4" />
             </svg>
-            <span>पिछला / Back</span>
+            <span>पीछे जाएँ / Previous Step</span>
           </button>
 
           {/* Step Indicator text */}
-          <span style={{ fontSize: '13px', color: isHighContrast ? '#d1d5db' : '#64748b' }}>
-            चरण {currentStep} / 8 (Step {currentStep} of 8)
+          <span style={{ fontSize: '13px', fontWeight: 600, color: isHighContrast ? '#d1d5db' : '#64748b' }}>
+            चरण {currentStep} / 8 • Step {currentStep} of 8
           </span>
 
           {/* Next Button */}
@@ -449,9 +449,12 @@ export const LivelihoodMappingPage: React.FC = () => {
               fontSize: '14.5px',
               fontWeight: 700,
               minHeight: '44px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
             }}
           >
-            <span>{currentStep === 8 ? 'समीक्षा करें / Review (Step 9)' : 'अगला चरण / Next'}</span>
+            <span>{currentStep === 8 ? 'समीक्षा करें एवं पुष्टि करें / Review (Step 9)' : 'आगे बढ़ें / Next Step'}</span>
             <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 10h10M11 6l4 4-4 4" />
             </svg>

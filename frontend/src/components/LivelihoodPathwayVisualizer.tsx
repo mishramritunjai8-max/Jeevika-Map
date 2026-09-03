@@ -150,7 +150,7 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
         {/* Section Header */}
         <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 36px' }}>
           <span className="jm-badge jm-badge-green" style={{ marginBottom: '10px' }}>
-            Interactive Livelihood Intelligence Pipeline
+            इंटरएक्टिव आजीविका आसूचना / Interactive Livelihood Intelligence
           </span>
           <h2
             id="livelihood-vis-title"
@@ -158,11 +158,14 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
               fontSize: 'clamp(24px, 3.2vw, 32px)',
               fontWeight: 800,
               color: isHighContrast ? '#ffffff' : '#0c2340',
-              marginBottom: '12px',
+              marginBottom: '6px',
             }}
           >
-            Beneficiary to NSQF Pathway Convergence
+            लाभार्थी से एनएसक्यूएफ मार्ग अभिसरण
           </h2>
+          <div style={{ fontSize: '15px', fontWeight: 600, color: isHighContrast ? '#ff9933' : '#c2410c', marginBottom: '10px' }}>
+            Beneficiary to NSQF Pathway Convergence
+          </div>
           <p
             style={{
               fontSize: '15px',
@@ -170,9 +173,8 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
               lineHeight: 1.6,
             }}
           >
-            Explore how Jeevika Map systematically translates grassroots informal trades into
-            standardized NSQF qualification packs, cluster market linkages, and direct PM-AJAY
-            subsidized pathways.
+            देखें कि कैसे जीविका मैप जमीनी स्तर के पारंपरिक हुनर को प्रमाणित एनएसक्यूएफ योग्यता पैक,
+            क्लस्टर बाजार मांग और पीएम-अजय टूलकिट सब्सिडी से जोड़ता है।
           </p>
         </div>
 
@@ -265,17 +267,17 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
               <span className="jm-badge jm-badge-neutral" style={{ fontSize: '10.5px' }}>
-                Stage 1
+                चरण 1 • Stage 1
               </span>
               <span style={{ fontSize: '11px', color: '#15803d', fontWeight: 600 }}>
-                ✓ Profile Verified
+                ✓ सत्यापित (Verified)
               </span>
             </div>
-            <h2 style={{ fontSize: '16px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', marginBottom: '4px' }}>
-              Beneficiary Profile
+            <h2 style={{ fontSize: '16px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', marginBottom: '2px' }}>
+              लाभार्थी प्रोफाइल
             </h2>
             <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '16px' }}>
-              Socio-Economic & Baseline Assessment
+              Beneficiary Profile & Baseline
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '12.5px', flexGrow: 1 }}>
@@ -315,17 +317,17 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
               <span className="jm-badge jm-badge-saffron" style={{ fontSize: '10.5px' }}>
-                Stage 2
+                चरण 2 • Stage 2
               </span>
               <span style={{ fontSize: '11px', color: '#c2410c', fontWeight: 600 }}>
-                RPL Eligible
+                RPL पात्र (Eligible)
               </span>
             </div>
-            <h2 style={{ fontSize: '16px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', marginBottom: '4px' }}>
-              Skills Assessment
+            <h2 style={{ fontSize: '16px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', marginBottom: '2px' }}>
+              कौशल मूल्यांकन
             </h2>
             <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '16px' }}>
-              Informal Experience & Prior Learning
+              Skills & RPL Prior Learning Assessment
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '12px', flexGrow: 1 }}>
@@ -348,15 +350,15 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
                     </span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', color: '#64748b', fontSize: '11px' }}>
-                    <span>Tenure: {skill.experience}</span>
-                    {skill.rplCandidate && <span style={{ color: '#15803d', fontWeight: 600 }}>✓ RPL Fast-Track</span>}
+                    <span>अनुभव / Tenure: {skill.experience}</span>
+                    {skill.rplCandidate && <span style={{ color: '#15803d', fontWeight: 600 }}>✓ RPL पात्र</span>}
                   </div>
                 </div>
               ))}
             </div>
 
             <div style={{ marginTop: '16px', borderTop: `1px solid ${isHighContrast ? '#374151' : '#f1f5f9'}`, paddingTop: '10px', fontSize: '11.5px', color: '#64748b' }}>
-              Validation: <strong>Gram Panchayat Surveyed</strong>
+              सत्यापन: <strong>ग्राम पंचायत सर्वेक्षण (Surveyed)</strong>
             </div>
           </div>
 
@@ -374,37 +376,37 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
               <span className="jm-badge jm-badge-navy" style={{ fontSize: '10.5px' }}>
-                Stage 3
+                चरण 3 • Stage 3
               </span>
               <span style={{ fontSize: '11px', color: '#1e3a8a', fontWeight: 600 }}>
-                Cluster Synced
+                क्लस्टर मांग (Cluster Synced)
               </span>
             </div>
-            <h2 style={{ fontSize: '16px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', marginBottom: '4px' }}>
-              Local Opportunities
+            <h2 style={{ fontSize: '16px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', marginBottom: '2px' }}>
+              स्थानीय अवसर
             </h2>
             <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '16px' }}>
-              District Value Chain & Market Demand
+              District Demand & Value Chains
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '12px', flexGrow: 1 }}>
               <div style={{ padding: '8px', backgroundColor: isHighContrast ? '#1f2937' : '#eff6ff', borderRadius: '4px' }}>
-                <span style={{ color: '#64748b', fontSize: '11px', display: 'block' }}>INDUSTRIAL CLUSTER</span>
+                <span style={{ color: '#64748b', fontSize: '10.5px', display: 'block' }}>औद्योगिक क्लस्टर / CLUSTER</span>
                 <strong style={{ color: isHighContrast ? '#ffffff' : '#0c2340' }}>
                   {selectedPersona.localOpportunity.clusterName}
                 </strong>
               </div>
 
               <div style={{ padding: '8px', backgroundColor: isHighContrast ? '#1f2937' : '#eff6ff', borderRadius: '4px' }}>
-                <span style={{ color: '#64748b', fontSize: '11px', display: 'block' }}>MARKET ABSORPTION</span>
+                <span style={{ color: '#64748b', fontSize: '10.5px', display: 'block' }}>बाजार खपत / MARKET ABSORPTION</span>
                 <p style={{ margin: 0, fontSize: '11.5px', color: isHighContrast ? '#d1d5db' : '#334155' }}>
                   {selectedPersona.localOpportunity.marketDemand}
                 </p>
               </div>
 
               <div>
-                <span style={{ color: '#64748b', fontSize: '11px', display: 'block', marginBottom: '4px' }}>
-                  KEY DRIVERS & SCHEMES
+                <span style={{ color: '#64748b', fontSize: '10.5px', display: 'block', marginBottom: '4px' }}>
+                  प्रमुख योजनाएं / KEY DRIVERS
                 </span>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                   {selectedPersona.localOpportunity.economicDrivers.map((driver, idx) => (
@@ -426,7 +428,7 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
             </div>
 
             <div style={{ marginTop: '16px', borderTop: `1px solid ${isHighContrast ? '#374151' : '#f1f5f9'}`, paddingTop: '10px', fontSize: '11.5px', color: '#64748b' }}>
-              Training Facility: <strong>{selectedPersona.localOpportunity.nearestHub}</strong>
+              प्रशिक्षण केंद्र: <strong>{selectedPersona.localOpportunity.nearestHub}</strong>
             </div>
           </div>
 
@@ -446,14 +448,14 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
               <span className="jm-badge jm-badge-green" style={{ fontSize: '10.5px' }}>
-                Stage 4 • Final Pathway
+                चरण 4 • अंतिम कौशल मार्ग
               </span>
               <span style={{ fontSize: '11px', color: '#15803d', fontWeight: 700 }}>
                 NSQF Level {selectedPersona.nsqfPathway.nsqfLevel}
               </span>
             </div>
-            <h2 style={{ fontSize: '16px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', marginBottom: '4px' }}>
-              NSQF Skill Pathway
+            <h2 style={{ fontSize: '16px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', marginBottom: '2px' }}>
+              एनएसक्यूएफ कौशल मार्ग
             </h2>
             <div style={{ fontSize: '12px', color: '#15803d', fontWeight: 600, marginBottom: '14px' }}>
               {selectedPersona.nsqfPathway.jobRole}
@@ -461,21 +463,21 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px', flexGrow: 1 }}>
               <div style={{ padding: '8px', backgroundColor: isHighContrast ? '#1f2937' : '#f0fdf4', borderRadius: '4px', border: '1px solid #bbf7d0' }}>
-                <span style={{ color: '#166534', fontSize: '10.5px', display: 'block' }}>QUALIFICATION PACK</span>
+                <span style={{ color: '#166534', fontSize: '10.5px', display: 'block' }}>क्वालिफिकेशन पैक / QP-NOS</span>
                 <strong style={{ color: isHighContrast ? '#ffffff' : '#0f172a', fontSize: '12px' }}>
                   {selectedPersona.nsqfPathway.qpNosCode}
                 </strong>
               </div>
 
               <div style={{ padding: '8px', backgroundColor: isHighContrast ? '#1f2937' : '#f0fdf4', borderRadius: '4px', border: '1px solid #bbf7d0' }}>
-                <span style={{ color: '#166534', fontSize: '10.5px', display: 'block' }}>PM-AJAY CONVERGENCE</span>
+                <span style={{ color: '#166534', fontSize: '10.5px', display: 'block' }}>पीएम-अजय अनुदान / PM-AJAY GRANT</span>
                 <strong style={{ color: '#c2410c', fontSize: '12px' }}>
                   {selectedPersona.nsqfPathway.pmajayGrant}
                 </strong>
               </div>
 
               <div style={{ padding: '8px', backgroundColor: isHighContrast ? '#1f2937' : '#f0fdf4', borderRadius: '4px', border: '1px solid #bbf7d0' }}>
-                <span style={{ color: '#166534', fontSize: '10.5px', display: 'block' }}>PROJECTED LIVELIHOOD DELTA</span>
+                <span style={{ color: '#166534', fontSize: '10.5px', display: 'block' }}>अनुमानित आय वृद्धि / INCOME DELTA</span>
                 <strong style={{ color: '#15803d', fontSize: '13.5px' }}>
                   {selectedPersona.nsqfPathway.projectedIncome}
                 </strong>
@@ -483,7 +485,7 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
             </div>
 
             <div style={{ marginTop: '16px', borderTop: `1px solid ${isHighContrast ? '#374151' : '#f1f5f9'}`, paddingTop: '10px', fontSize: '11.5px', color: '#64748b' }}>
-              Accreditation: <strong>{selectedPersona.nsqfPathway.accreditingBody}</strong>
+              प्रत्यायन परिषद (Accreditation): <strong>{selectedPersona.nsqfPathway.accreditingBody}</strong>
             </div>
           </div>
         </div>

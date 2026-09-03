@@ -337,9 +337,9 @@ export const BeneficiaryProfilePage: React.FC = () => {
       >
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span className="jm-badge jm-badge-navy">Step 02 • Understand</span>
+            <span className="jm-badge jm-badge-navy">चरण 02 • समझें (Step 02 • Understand)</span>
             <span style={{ fontSize: '11px', color: isHighContrast ? '#9ca3af' : '#64748b', fontWeight: 600 }}>
-              MANDATE CODE: PMAJAY-BEN-MOD-02
+              शासनादेश कोड: PMAJAY-BEN-MOD-02
             </span>
           </div>
           <span
@@ -353,7 +353,7 @@ export const BeneficiaryProfilePage: React.FC = () => {
               border: '1px solid #bfdbfe',
             }}
           >
-            Phase 1: Architecture Specification
+            आर्किटेक्चर विशिष्टता
           </span>
         </div>
 
@@ -365,16 +365,15 @@ export const BeneficiaryProfilePage: React.FC = () => {
             marginBottom: '4px',
           }}
         >
-          Beneficiary Livelihood Profiling & Skills Inventory
+          लाभार्थी आजीविका प्रोफाइल एवं कौशल इन्वेंट्री
         </h1>
         <div style={{ fontSize: '13.5px', color: isHighContrast ? '#ff9933' : '#c2410c', fontWeight: 600, marginBottom: '12px' }}>
-          लाभार्थी आजीविका प्रोफाइल एवं कौशल सूची
+          Beneficiary Livelihood Profiling & Skills Inventory
         </div>
 
         <p style={{ fontSize: '14px', lineHeight: 1.6, color: isHighContrast ? '#e5e7eb' : '#475569', margin: 0 }}>
-          Captures and digitizes individual beneficiary profiles from Scheduled Caste communities.
-          Focuses on validating informal, unaccredited competencies through the <strong>Recognition of Prior
-          Learning (RPL)</strong> framework under NSQF standards.
+          अनुसूचित जाति (SC) परिवारों के हुनरमंद कारीगरों एवं युवाओं का डिजिटल प्रोफाइल तैयार करता है।
+          अनौपचारिक कौशल को <strong>पूर्व अनुभव की मान्यता (RPL)</strong> फ्रेमवर्क एवं एनएसक्यूएफ मानकों के तहत सत्यापित करता है।
         </p>
       </div>
 
@@ -404,16 +403,16 @@ export const BeneficiaryProfilePage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              1. Socio-Economic Baseline
+              1. सामाजिक-आर्थिक आधार (Baseline)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Standardizes the verified identity records required for PM-AJAY beneficiary convergence:
+            पीएम-अजय योजना के तहत अभिसरण हेतु सत्यापित पहचान एवं घरेलू विवरण:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>Household demographic & caste verification indicators</li>
-            <li>Current informal daily/monthly wage levels and seasonality</li>
-            <li>Formal schooling vs practical trade apprenticeships</li>
+            <li>परिवार की जनसांख्यिकी एवं जाति सत्यापन संकेतक</li>
+            <li>वर्तमान दैनिक/मासिक मजदूरी एवं मौसमी कार्य प्रकृति</li>
+            <li>औपचारिक शिक्षा बनाम व्यावहारिक हुनर व अनुभव</li>
           </ul>
         </div>
 
@@ -434,17 +433,16 @@ export const BeneficiaryProfilePage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              2. RPL Skill Diagnostic
+              2. आरपीएल कौशल निदान (RPL Diagnostic)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Quantifies informal trade competence to fast-track certification without requiring full
-            multi-year diploma courses:
+            व्यावहारिक कार्य क्षमता का मूल्यांकन कर बिना लंबे पाठ्यक्रम के सीधा एनएसक्यूएफ प्रमाणन:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>Practical tool handling & diagnostic competency matrix</li>
-            <li>Identification of skill gaps vs NCVET QP-NOS standards</li>
-            <li>Readiness for fast-track 80–120 hour bridge curricula</li>
+            <li>औजार संचालन एवं कार्य प्रवीणता मैट्रिक्स</li>
+            <li>NCVET QP-NOS मानकों के सापेक्ष कौशल अंतराल की पहचान</li>
+            <li>80–120 घंटे के ब्रिज-प्रशिक्षण हेतु तत्परता</li>
           </ul>
         </div>
 
@@ -465,17 +463,16 @@ export const BeneficiaryProfilePage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              3. Aspiration & Mobility
+              3. आकांक्षा एवं गतिशीलता (Mobility)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Measures willingness to migrate to nearby industrial clusters versus preference for
-            home-based micro-enterprise:
+            नजदीकी औद्योगिक क्लस्टर में जाने की तत्परता बनाम घर से सूक्ष्म उद्यम की प्राथमिकता:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>Intra-district vs inter-district mobility appetite</li>
-            <li>Self-employment vs wage-employment preference</li>
-            <li>SHG / Producer cooperative collaboration index</li>
+            <li>जिला स्तर बनाम ब्लॉक स्तर पर आवागमन की सुविधा</li>
+            <li>स्व-रोजगार बनाम नियमित वेतनभोगी नौकरी की इच्छा</li>
+            <li>स्वयं सहायता समूह (SHG) सहकारी उत्पादन में सहभागिता</li>
           </ul>
         </div>
       </div>
@@ -498,10 +495,10 @@ export const BeneficiaryProfilePage: React.FC = () => {
           <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M15 10H5M9 14l-4-4 4-4" />
           </svg>
-          <span>Back to Livelihood Mapping Wizard</span>
+          <span>आजीविका मैपिंग विज़ार्ड पर जाएँ (Back to Mapping)</span>
         </Link>
         <Link to="/opportunities" className="jm-btn jm-btn-primary">
-          <span>Proceed to Local Opportunities</span>
+          <span>स्थानीय अवसर देखें (View Local Opportunities)</span>
           <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 10h10M11 6l4 4-4 4" />
           </svg>

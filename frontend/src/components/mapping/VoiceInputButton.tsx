@@ -152,8 +152,8 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
       >
         <span>
           {isSupported
-            ? '💡 Browser Speech API prototype: Hindi & Indian English supported. Keyboard entry is always available.'
-            : '⚠️ Your browser does not support the Web Speech API. Please enter your response using the text box.'}
+            ? '💡 हिंदी एवं भारतीय अंग्रेजी में बोलकर उत्तर दें (Browser Speech API • Keyboard entry always available)'
+            : '⚠️ आपके ब्राउज़र में आवाज पहचान सुविधा उपलब्ध नहीं है। कृपया लिखकर उत्तर दें।'}
         </span>
       </div>
 

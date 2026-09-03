@@ -59,11 +59,10 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
               </span>
             </div>
             <p style={{ fontSize: '12.5px', color: '#94a3b8', margin: 0, marginBottom: '14px' }}>
-              Pradhan Mantri Anusuchit Jaati Abhyuday Yojana (PM-AJAY) convergent livelihood
-              intelligence, skill mapping, and NCVET-NSQF career acceleration framework.
+              प्रधानमंत्री अनुसूचित जाति अभ्युदय योजना (PM-AJAY) अंतर्गत आजीविका आसूचना, कौशल मानचित्रण एवं एनसीवीईटी-एनएसक्यूएफ त्वरित आजीविका फ्रेमवर्क।
             </p>
             <p style={{ fontSize: '11.5px', color: '#64748b', margin: 0 }}>
-              Ministry of Social Justice & Empowerment, Government of India.
+              सामाजिक न्याय एवं अधिकारिता मंत्रालय, भारत सरकार (Ministry of Social Justice & Empowerment, Govt. of India).
             </p>
           </div>
 
@@ -79,32 +78,32 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
                 marginBottom: '14px',
               }}
             >
-              Portal Sections
+              पोर्टल अनुभाग / Portal Sections
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <li>
                 <a href="#hero" style={{ color: '#cbd5e1', textDecoration: 'none' }}>
-                  Platform Home
+                  मुख्य पृष्ठ / Platform Home
                 </a>
               </li>
               <li>
                 <a href="#how-it-works" style={{ color: '#cbd5e1', textDecoration: 'none' }}>
-                  How It Works (4-Stage Flow)
-                </a>
-              </li>
-              <li>
-                <a href="#livelihood-mapping" style={{ color: '#cbd5e1', textDecoration: 'none' }}>
-                  Livelihood Mapping Matrix
+                  कार्यप्रणाली / How It Works
                 </a>
               </li>
               <li>
                 <a href="#skills" style={{ color: '#cbd5e1', textDecoration: 'none' }}>
-                  NSQF Skill Recommendations
+                  आजीविका एवं कौशल मार्ग / Livelihood Pathways
                 </a>
               </li>
               <li>
                 <a href="#impact-stats" style={{ color: '#cbd5e1', textDecoration: 'none' }}>
-                  Pilot Demonstration Metrics
+                  पायलट प्रभाव आंकड़े / Pilot Metrics
+                </a>
+              </li>
+              <li>
+                <a href="/officer/login" style={{ color: '#ff9933', textDecoration: 'none', fontWeight: 600 }}>
+                  अधिकारी लॉगिन / Officer Command Portal
                 </a>
               </li>
             </ul>
@@ -122,23 +121,23 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
                 marginBottom: '14px',
               }}
             >
-              Related National Portals
+              संबंधित राष्ट्रीय पोर्टल / Related Portals
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <li>
-                <span style={{ color: '#cbd5e1' }}>National Skill Development Corporation (NSDC)</span>
+                <span style={{ color: '#cbd5e1' }}>राष्ट्रीय कौशल विकास निगम (NSDC)</span>
               </li>
               <li>
-                <span style={{ color: '#cbd5e1' }}>National Council for Vocational Education (NCVET)</span>
+                <span style={{ color: '#cbd5e1' }}>राष्ट्रीय व्यावसायिक शिक्षा एवं प्रशिक्षण परिषद (NCVET)</span>
               </li>
               <li>
-                <span style={{ color: '#cbd5e1' }}>Ministry of Social Justice & Empowerment</span>
+                <span style={{ color: '#cbd5e1' }}>सामाजिक न्याय एवं अधिकारिता मंत्रालय (MoSJE)</span>
               </li>
               <li>
-                <span style={{ color: '#cbd5e1' }}>Skill India Digital Hub (SIDH)</span>
+                <span style={{ color: '#cbd5e1' }}>स्किल इंडिया डिजिटल हब (SIDH)</span>
               </li>
               <li>
-                <span style={{ color: '#cbd5e1' }}>National Career Service (NCS)</span>
+                <span style={{ color: '#cbd5e1' }}>राष्ट्रीय करियर सेवा (NCS)</span>
               </li>
             </ul>
           </div>
@@ -155,15 +154,15 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
                 marginBottom: '14px',
               }}
             >
-              Accessibility & Grievance
+              सुगमता एवं सहायता / Grievance Desk
             </div>
             <p style={{ fontSize: '12.5px', color: '#94a3b8', margin: 0, marginBottom: '10px' }}>
-              Compliant with Guidelines for Indian Government Websites (GIGW 3.0) and WCAG 2.1 AA.
+              भारत सरकार वेबसाइट दिशानिर्देश (GIGW 3.0) एवं WCAG 2.1 AA मानकों के अनुरूप।
             </p>
             <div style={{ fontSize: '12px', color: '#cbd5e1' }}>
-              <div>PM-AJAY Technical PMU Support</div>
+              <div>पीएम-अजय तकनीकी सहायता (PMU Support)</div>
               <div style={{ color: '#93c5fd', marginTop: '4px' }}>support.jeevikamap@gov.in (Demo)</div>
-              <div style={{ color: '#94a3b8', fontSize: '11px', marginTop: '6px' }}>Toll Free: 1800-XXX-XXXX</div>
+              <div style={{ color: '#94a3b8', fontSize: '11px', marginTop: '6px' }}>टोल फ्री हेल्पलाइन: 1800-XXX-XXXX</div>
             </div>
           </div>
         </div>
@@ -179,10 +178,9 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
             lineHeight: 1.6,
           }}
         >
-          <strong>Disclaimer:</strong> Jeevika Map is a specialized livelihood intelligence and NSQF
-          recommendation tool conceptualized under the PM-AJAY framework. All occupational profiles,
-          competency assessments, and qualification levels reference official NCVET National Occupational
-          Standards (NOS). Data displayed on this demonstration instance is simulated for pilot validation.
+          <strong>अस्वीकरण / Legal Disclaimer:</strong> जीविका मैप (Jeevika Map) पीएम-अजय योजना के तहत विकसित
+          एक विशिष्ट आजीविका आसूचना एवं एनएसक्यूएफ अनुशंसा मंच है। सभी व्यावसायिक प्रोफाइल और कौशल योग्यता
+          मानक आधिकारिक NCVET राष्ट्रीय व्यावसायिक मानकों (NOS) पर आधारित हैं।
         </div>
 
         {/* Bottom Strip: Copyright and Compliance */}
@@ -200,13 +198,13 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
           }}
         >
           <div>
-            © {new Date().getFullYear()} Jeevika Map • Ministry of Social Justice & Empowerment, Government of India.
+            © {new Date().getFullYear()} जीविका मैप (Jeevika Map) • सामाजिक न्याय एवं अधिकारिता मंत्रालय, भारत सरकार।
           </div>
           <div style={{ display: 'flex', gap: '16px' }}>
-            <span style={{ color: '#94a3b8' }}>Privacy Policy</span>
-            <span style={{ color: '#94a3b8' }}>Terms of Service</span>
-            <span style={{ color: '#94a3b8' }}>Hyperlinking Policy</span>
-            <span style={{ color: '#94a3b8' }}>Security Audit</span>
+            <span style={{ color: '#94a3b8' }}>गोपनीयता नीति (Privacy)</span>
+            <span style={{ color: '#94a3b8' }}>उपयोग की शर्तें (Terms)</span>
+            <span style={{ color: '#94a3b8' }}>हाइपरलिंक नीति (Policy)</span>
+            <span style={{ color: '#94a3b8' }}>सुरक्षा लेखापरीक्षा (Security)</span>
           </div>
         </div>
       </div>

@@ -8,38 +8,46 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ isHighContrast = false }
   const steps = [
     {
       num: '01',
-      stage: 'Discover',
-      tagline: 'Household & Cluster Profiling',
+      stageHi: 'खोजें',
+      stageEn: 'Discover',
+      taglineHi: 'परिवार एवं क्लस्टर सर्वेक्षण',
+      taglineEn: 'Household & Cluster Profiling',
       description:
-        'Grassroots field enumerators and community resource persons capture socio-economic baselines, traditional trade heritage, informal skill repertoires, and household assets.',
-      meta: 'Socio-Economic Baseline • Cluster Geo-Tagging',
+        'जमीनी प्रगणक एवं सामुदायिक मित्र सामाजिक-आर्थिक स्थिति, पारंपरिक हुनर, कार्य अनुभव और घरेलू आजीविका संसाधनों का प्रामाणिक विवरण एकत्र करते हैं।',
+      meta: 'सामाजिक-आर्थिक आधार • क्लस्टर जियो-टैगिंग (Geo-Tagging)',
       badgeClass: 'jm-badge-neutral',
     },
     {
       num: '02',
-      stage: 'Understand',
-      tagline: 'Competency & Demand Synthesis',
+      stageHi: 'समझें',
+      stageEn: 'Understand',
+      taglineHi: 'कौशल एवं बाजार मांग विश्लेषण',
+      taglineEn: 'Competency & Demand Synthesis',
       description:
-        'The platform evaluates informal experience against formal skill matrices while analyzing district industrial corridors, local raw material value chains, and employer requirements.',
-      meta: 'Recognition of Prior Learning (RPL) Assessment',
+        'प्लेटफॉर्म व्यावहारिक कार्य अनुभव का औपचारिक कौशल मानकों से मिलान करता है और जिले के औद्योगिक क्लस्टर, कच्चे माल एवं स्थानीय रोजगार मांग का विश्लेषण करता है।',
+      meta: 'पूर्व अनुभव की मान्यता (RPL) मूल्यांकन',
       badgeClass: 'jm-badge-navy',
     },
     {
       num: '03',
-      stage: 'Recommend',
-      tagline: 'NSQF-Aligned Trajectory Formulation',
+      stageHi: 'अनुशंसा',
+      stageEn: 'Recommend',
+      taglineHi: 'एनएसक्यूएफ कौशल मार्ग निर्धारण',
+      taglineEn: 'NSQF-Aligned Trajectory',
       description:
-        'Tailored recommendations identify certified NSQF Qualification Packs (QP-NOS), bridging short bridge-courses or advanced certifications to optimize viable income.',
-      meta: 'National Skill Matrix Mapping • QP-NOS Matching',
+        'व्यक्तिगत प्रोफाइल के आधार पर प्रमाणित एनएसक्यूएफ योग्यता पैक (QP-NOS) सुझाए जाते हैं, जिससे कम अवधि के ब्रिज-प्रशिक्षण द्वारा आय क्षमता में स्थायी वृद्धि हो सके।',
+      meta: 'राष्ट्रीय कौशल मैट्रिक्स • QP-NOS मैचिंग',
       badgeClass: 'jm-badge-saffron',
     },
     {
       num: '04',
-      stage: 'Act',
-      tagline: 'Convergence & Scheme Linkage',
+      stageHi: 'कार्य योजना',
+      stageEn: 'Act',
+      taglineHi: 'पीएम-अजय अनुदान एवं योजना जुड़ाव',
+      taglineEn: 'Convergence & Scheme Linkage',
       description:
-        'Seamless integration with PM-AJAY financial assistance, capital grants for toolkits, direct enrollment into accredited training partners, and SHG enterprise clusters.',
-      meta: 'PM-AJAY Capital Subsidies • Certified Enrolment',
+        'पीएम-अजय वित्तीय सहायता, आधुनिक टूलकिट हेतु पूंजीगत सब्सिडी, मान्यता प्राप्त प्रशिक्षण केंद्रों में निःशुल्क नामांकन एवं स्वयं सहायता समूह (SHG) उद्यम से सीधा जुड़ाव।',
+      meta: 'पीएम-अजय पूंजीगत सब्सिडी • प्रमाणित नामांकन',
       badgeClass: 'jm-badge-green',
     },
   ];
@@ -58,7 +66,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ isHighContrast = false }
         {/* Section Header */}
         <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 48px' }}>
           <span className="jm-badge jm-badge-saffron" style={{ marginBottom: '10px' }}>
-            Operational Methodology
+            कार्यप्रणाली / Operational Methodology
           </span>
           <h2
             id="how-it-works-title"
@@ -66,11 +74,14 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ isHighContrast = false }
               fontSize: 'clamp(24px, 3.2vw, 32px)',
               fontWeight: 800,
               color: isHighContrast ? '#ffffff' : '#0c2340',
-              marginBottom: '12px',
+              marginBottom: '6px',
             }}
           >
-            How Jeevika Map Operates
+            जीविका मैप कैसे काम करता है
           </h2>
+          <div style={{ fontSize: '15px', fontWeight: 600, color: isHighContrast ? '#ff9933' : '#c2410c', marginBottom: '10px' }}>
+            How Jeevika Map Operates (4-Stage Progression)
+          </div>
           <p
             style={{
               fontSize: '15px',
@@ -78,9 +89,8 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ isHighContrast = false }
               lineHeight: 1.6,
             }}
           >
-            A four-stage evidence-based progression translating latent community skills into
-            accredited certifications, local enterprise readiness, and direct PM-AJAY capital
-            support.
+            एक सरल चार-चरणीय प्रमाण-आधारित प्रक्रिया जो जमीनी कौशल को मान्यता प्राप्त प्रमाणन,
+            स्थानीय उद्यम एवं पीएम-अजय प्रत्यक्ष सरकारी सहायता से जोड़ती है।
           </p>
         </div>
 
@@ -148,7 +158,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ isHighContrast = false }
                   {step.num}
                 </div>
                 <span className={`jm-badge ${step.badgeClass}`} style={{ fontSize: '10.5px' }}>
-                  Stage {index + 1}
+                  चरण {index + 1} (Stage {index + 1})
                 </span>
               </div>
 
@@ -158,10 +168,10 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ isHighContrast = false }
                   fontSize: '18px',
                   fontWeight: 800,
                   color: isHighContrast ? '#ffffff' : '#0c2340',
-                  marginBottom: '4px',
+                  marginBottom: '2px',
                 }}
               >
-                {step.stage}
+                {step.stageHi} <span style={{ fontSize: '14px', fontWeight: 600, color: isHighContrast ? '#9ca3af' : '#64748b' }}>({step.stageEn})</span>
               </h2>
               <div
                 style={{
@@ -171,7 +181,10 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ isHighContrast = false }
                   marginBottom: '12px',
                 }}
               >
-                {step.tagline}
+                {step.taglineHi}
+                <div style={{ fontSize: '11px', color: isHighContrast ? '#d1d5db' : '#64748b', fontWeight: 500 }}>
+                  {step.taglineEn}
+                </div>
               </div>
 
               {/* Description */}

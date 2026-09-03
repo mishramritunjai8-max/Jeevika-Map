@@ -8,27 +8,31 @@ export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false
   const metrics = [
     {
       metric: '12+',
-      label: 'Pilot Districts Mapped',
-      sublabel: 'Sample cluster zones across UP, Rajasthan, MP, Bihar & Tamil Nadu',
-      tag: 'Simulation Prototype',
+      labelHi: 'पायलट जिले मानचित्रित',
+      labelEn: 'Pilot Districts Mapped',
+      sublabel: 'यूपी, राजस्थान, एमपी, बिहार एवं तमिलनाडु के प्रमुख क्लस्टर क्षेत्र',
+      tag: 'पायलट मॉडल (Pilot Model)',
     },
     {
       metric: '180+',
-      label: 'NSQF Job Roles Indexed',
-      sublabel: 'Accredited Qualification Packs matched across 14 Sector Skill Councils',
-      tag: 'NCVET NOS Matrix',
+      labelHi: 'एनएसक्यूएफ जॉब रोल सूचीबद्ध',
+      labelEn: 'NSQF Job Roles Indexed',
+      sublabel: '14 सेक्टर स्किल काउंसिलों में मान्यता प्राप्त क्वालिफिकेशन पैक (QP-NOS)',
+      tag: 'एनसीवीईटी मानक (NCVET)',
     },
     {
       metric: '3.1x',
-      label: 'Average Income Delta',
-      sublabel: 'Simulated household uplift comparing unorganized wages with certified enterprise',
-      tag: 'Projected Model',
+      labelHi: 'औसत आय वृद्धि अनुमान',
+      labelEn: 'Average Income Delta',
+      sublabel: 'असंगठित मजदूरी की तुलना में प्रमाणित कारीगर उद्यम से अनुमानित पारिवारिक आय',
+      tag: 'प्रक्षेपित मॉडल (Projected)',
     },
     {
       metric: '100%',
-      label: 'Voice & Dialect Target',
-      sublabel: 'Grassroots interface designed for vernacular field enumerator voice interactions',
-      tag: 'Inclusion Standard',
+      labelHi: 'आवाज एवं मातृभाषा सुविधा',
+      labelEn: 'Voice & Vernacular Target',
+      sublabel: 'जमीनी प्रगणकों एवं नागरिकों हेतु सहज हिंदी एवं आवाज आधारित इनपुट',
+      tag: 'समावेशन मानक (Inclusion)',
     },
   ];
 
@@ -75,17 +79,16 @@ export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
           <div style={{ fontSize: '12.5px', color: isHighContrast ? '#ffedd5' : '#9a3412', lineHeight: 1.5 }}>
-            <strong>Demonstration & Pilot Projections Notice:</strong> The values presented below represent
-            modeled demonstration and pilot projections for system architecture verification. They are clearly
-            marked as sample targets and must <em>not</em> be cited as official census or audited Ministry of Social
-            Justice & Empowerment statistics.
+            <strong>प्रदर्शन एवं पायलट प्रक्षेपण सूचना (Pilot Modeling Notice):</strong> नीचे प्रस्तुत मूल्य
+            प्रणाली सत्यापन हेतु मॉडल किए गए पायलट प्रक्षेपण हैं। इन्हें आधिकारिक जनगणना या सामाजिक न्याय एवं
+            अधिकारिता मंत्रालय के अंतिम लेखापरीक्षित आंकड़े न माना जाए।
           </div>
         </div>
 
         {/* Section Header */}
         <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 40px' }}>
           <span className="jm-badge jm-badge-navy" style={{ marginBottom: '10px' }}>
-            Pilot Scope & Modeling
+            पायलट दायरा एवं प्रभाव / Pilot Scope & Modeling
           </span>
           <h2
             id="impact-stats-title"
@@ -93,14 +96,17 @@ export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false
               fontSize: 'clamp(24px, 3.2vw, 32px)',
               fontWeight: 800,
               color: isHighContrast ? '#ffffff' : '#0c2340',
-              marginBottom: '10px',
+              marginBottom: '6px',
             }}
           >
-            Anticipated Impact in Pilot Clusters
+            पायलट क्लस्टर में संभावित प्रभाव
           </h2>
+          <div style={{ fontSize: '15px', fontWeight: 600, color: isHighContrast ? '#ff9933' : '#c2410c', marginBottom: '10px' }}>
+            Anticipated Impact in Pilot Clusters
+          </div>
           <p style={{ fontSize: '14.5px', color: isHighContrast ? '#d1d5db' : '#475569', lineHeight: 1.6 }}>
-            Designed to bridge the structural gap between decentralized SC artisan talent and
-            formal industrial demand under PM-AJAY.
+            पीएम-अजय अंतर्गत अनुसूचित जाति (SC) समुदाय के हुनरमंद कारीगरों एवं युवाओं को
+            औपचारिक औद्योगिक मांग से जोड़ने हेतु तैयार किया गया मॉडल।
           </p>
         </div>
 
@@ -149,7 +155,6 @@ export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false
                   style={{
                     fontSize: '10px',
                     fontWeight: 700,
-                    textTransform: 'uppercase',
                     color: isHighContrast ? '#9ca3af' : '#64748b',
                     letterSpacing: '0.04em',
                   }}
@@ -163,11 +168,21 @@ export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false
                   fontSize: '15px',
                   fontWeight: 700,
                   color: isHighContrast ? '#ffffff' : '#1e293b',
+                  marginBottom: '2px',
+                }}
+              >
+                {item.labelHi}
+              </h2>
+              <div
+                style={{
+                  fontSize: '11.5px',
+                  color: isHighContrast ? '#9ca3af' : '#64748b',
+                  fontWeight: 600,
                   marginBottom: '6px',
                 }}
               >
-                {item.label}
-              </h2>
+                {item.labelEn}
+              </div>
 
               <p
                 style={{

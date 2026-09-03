@@ -20,9 +20,9 @@ export const SkillRecommendationsPage: React.FC = () => {
       >
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span className="jm-badge jm-badge-saffron">Step 04 • Recommend</span>
+            <span className="jm-badge jm-badge-saffron">चरण 04 • अनुशंसा (Step 04 • Recommend)</span>
             <span style={{ fontSize: '11px', color: isHighContrast ? '#9ca3af' : '#64748b', fontWeight: 600 }}>
-              MANDATE CODE: PMAJAY-REC-MOD-04
+              शासनादेश कोड: PMAJAY-REC-MOD-04
             </span>
           </div>
           <span
@@ -36,7 +36,7 @@ export const SkillRecommendationsPage: React.FC = () => {
               border: '1px solid #fed7aa',
             }}
           >
-            Phase 1: Architecture Specification
+            आर्किटेक्चर विशिष्टता
           </span>
         </div>
 
@@ -48,16 +48,15 @@ export const SkillRecommendationsPage: React.FC = () => {
             marginBottom: '4px',
           }}
         >
-          NSQF Skilling Recommendations & Qualification Packs
+          एनएसक्यूएफ कौशल अनुशंसाएं एवं योग्यता पैक
         </h1>
         <div style={{ fontSize: '13.5px', color: isHighContrast ? '#ff9933' : '#c2410c', fontWeight: 600, marginBottom: '12px' }}>
-          एनएसक्यूएफ कौशल अनुशंसाएं एवं योग्यता पैक
+          NSQF Skilling Recommendations & Qualification Packs
         </div>
 
         <p style={{ fontSize: '14px', lineHeight: 1.6, color: isHighContrast ? '#e5e7eb' : '#475569', margin: 0 }}>
-          Matches beneficiary profile competencies and localized market demand against the
-          National Council for Vocational Education and Training (NCVET) National Qualification
-          Register (NQR). Formulates clear, NSQF-accredited upskilling and certification pathways.
+          लाभार्थी के कौशल और स्थानीय मांग को राष्ट्रीय व्यावसायिक शिक्षा एवं प्रशिक्षण परिषद (NCVET) के राष्ट्रीय योग्यता रजिस्टर (NQR)
+          के साथ मिलाता है। आधिकारिक एनएसक्यूएफ-प्रमाणित अपस्किलिंग और प्रमाणन मार्ग तैयार करता है।
         </p>
       </div>
 
@@ -87,16 +86,16 @@ export const SkillRecommendationsPage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              1. QP-NOS Qualification Matching
+              1. QP-NOS योग्यता मिलान (Matching)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Bridges informal crafts into accredited National Occupational Standards:
+            पारंपरिक हुनर को राष्ट्रीय व्यावसायिक मानकों (NOS) से जोड़ने की प्रक्रिया:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>Direct mapping to Level 3 to Level 5 Qualification Packs</li>
-            <li>Multi-skilling recommendations for cross-seasonal resilience</li>
-            <li>Alignment across 14 priority Sector Skill Councils (SSCs)</li>
+            <li>लेवल 3 से लेवल 5 क्वालिफिकेशन पैक (QP) से सीधा मिलान</li>
+            <li>मौसमी उतार-चढ़ाव से सुरक्षा हेतु बहु-कौशल अनुशंसाएं</li>
+            <li>14 प्राथमिकता वाले सेक्टर स्किल काउंसिलों (SSCs) के साथ संरेखण</li>
           </ul>
         </div>
 
@@ -117,16 +116,16 @@ export const SkillRecommendationsPage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              2. Bridge Curriculum Formulation
+              2. ब्रिज पाठ्यक्रम निर्माण (Bridge Curriculum)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Constructs modular, time-sensitive training interventions minimizing wage disruption:
+            काम के नुकसान को न्यूनतम करते हुए छोटे, केंद्रित मॉड्यूल तैयार करना:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>80 to 160-hour RPL orientation + gap training modules</li>
-            <li>Digital literacy & UPI / digital invoicing integration</li>
-            <li>Workplace safety, quality standardization, and packaging</li>
+            <li>80 से 160 घंटे का आरपीएल ओरिएंटेशन एवं कौशल अंतराल प्रशिक्षण</li>
+            <li>डिजिटल साक्षरता, यूपीआई एवं डिजिटल बिलिंग एकीकरण</li>
+            <li>कार्यस्थल सुरक्षा, गुणवत्ता मानकीकरण एवं पैकेजिंग</li>
           </ul>
         </div>
 
@@ -149,16 +148,16 @@ export const SkillRecommendationsPage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              3. Accredited Training Partners
+              3. मान्यता प्राप्त प्रशिक्षण केंद्र (Training Hubs)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Identifies nearest verified training centers with active PM-AJAY funding allocations:
+            पीएम-अजय फंडिंग सहायता प्राप्त नजदीकी सत्यापित प्रशिक्षण केंद्रों की पहचान:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>Government Industrial Training Institutes (ITIs)</li>
-            <li>Pradhan Mantri Kaushal Kendras (PMKK)</li>
-            <li>Cluster Weavers / Artisans Service Centres</li>
+            <li>सरकारी औद्योगिक प्रशिक्षण संस्थान (ITI)</li>
+            <li>प्रधानमंत्री कौशल केंद्र (PMKK)</li>
+            <li>क्लस्टर बुनकर / कारीगर सेवा केंद्र</li>
           </ul>
         </div>
       </div>
@@ -181,10 +180,10 @@ export const SkillRecommendationsPage: React.FC = () => {
           <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M15 10H5M9 14l-4-4 4-4" />
           </svg>
-          <span>Back to Local Opportunities</span>
+          <span>स्थानीय अवसर पर वापस जाएँ (Back to Opportunities)</span>
         </Link>
         <Link to="/action-plan" className="jm-btn jm-btn-primary">
-          <span>Proceed to Action Plan</span>
+          <span>कार्य योजना देखें (Proceed to Action Plan)</span>
           <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 10h10M11 6l4 4-4 4" />
           </svg>

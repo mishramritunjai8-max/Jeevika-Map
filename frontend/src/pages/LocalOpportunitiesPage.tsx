@@ -20,9 +20,9 @@ export const LocalOpportunitiesPage: React.FC = () => {
       >
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span className="jm-badge jm-badge-neutral">Step 03 • Demand Analysis</span>
+            <span className="jm-badge jm-badge-neutral">चरण 03 • मांग विश्लेषण (Step 03 • Demand Analysis)</span>
             <span style={{ fontSize: '11px', color: isHighContrast ? '#9ca3af' : '#64748b', fontWeight: 600 }}>
-              MANDATE CODE: PMAJAY-OPP-MOD-03
+              शासनादेश कोड: PMAJAY-OPP-MOD-03
             </span>
           </div>
           <span
@@ -36,7 +36,7 @@ export const LocalOpportunitiesPage: React.FC = () => {
               border: '1px solid #cbd5e1',
             }}
           >
-            Phase 1: Architecture Specification
+            आर्किटेक्चर विशिष्टता
           </span>
         </div>
 
@@ -48,16 +48,15 @@ export const LocalOpportunitiesPage: React.FC = () => {
             marginBottom: '4px',
           }}
         >
-          Local District Opportunities & Value Chain Analysis
+          स्थानीय जिला अवसर एवं मूल्य श्रृंखला विश्लेषण
         </h1>
         <div style={{ fontSize: '13.5px', color: isHighContrast ? '#ff9933' : '#c2410c', fontWeight: 600, marginBottom: '12px' }}>
-          स्थानीय जिला अवसर एवं मूल्य श्रृंखला विश्लेषण
+          Local District Opportunities & Value Chain Analysis
         </div>
 
         <p style={{ fontSize: '14px', lineHeight: 1.6, color: isHighContrast ? '#e5e7eb' : '#475569', margin: 0 }}>
-          Synthesizes demand from District Industries Centres (DIC), MSME industrial parks, One District One
-          Product (ODOP) hubs, and agro-climatic trade channels to ensure that livelihood training maps
-          directly to real, paying local economic opportunities.
+          जिला उद्योग केंद्र (DIC), एमएसएमई औद्योगिक पार्क, एक जिला एक उत्पाद (ODOP) और स्थानीय व्यापारिक मार्गों
+          का विश्लेषण करता है ताकि कौशल प्रशिक्षण सीधे वास्तविक स्थानीय रोजगार व बाजार मांग से जुड़े।
         </p>
       </div>
 
@@ -87,16 +86,16 @@ export const LocalOpportunitiesPage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              1. Industrial Cluster Absorption
+              1. औद्योगिक क्लस्टर मांग (Cluster Absorption)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Indexes local hiring capacity across major industrial nodes within 25–50 km radii of target SC habitations:
+            लक्ष्यित बस्तियों के 25–50 किमी के दायरे में स्थानीय औद्योगिक भर्ती क्षमता का सूचकांक:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>Aggregated hiring projections from District Employment Exchanges</li>
-            <li>ODOP specialized cluster linkages (textiles, food processing, pottery)</li>
-            <li>Green jobs & renewable energy expansion (PM-KUSUM, rooftop solar)</li>
+            <li>जिला रोजगार कार्यालयों से संकलित भर्ती अनुमान</li>
+            <li>ODOP विशिष्ट क्लस्टर लिंकेज (हथकरघा, खाद्य प्रसंस्करण, हस्तशिल्प)</li>
+            <li>हरित रोजगार एवं नवीकरणीय ऊर्जा विस्तार (पीएम-कुसुम, रूफटॉप सोलर)</li>
           </ul>
         </div>
 
@@ -118,16 +117,16 @@ export const LocalOpportunitiesPage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              2. Raw Material & Supply Chains
+              2. कच्चा माल एवं आपूर्ति श्रृंखला (Supply Chains)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Eliminates exploitative middlemen by mapping institutional raw material depots and Common Facility Centers (CFC):
+            बिचौलियों के शोषण को समाप्त करने हेतु संस्थागत सामग्री डिपो एवं साझा सुविधा केंद्र (CFC):
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>National Handloom Development Corporation (NHDC) yarn depots</li>
-            <li>KVIC & state khadi board material distribution</li>
-            <li>Agricultural APMC cold storage & post-harvest processing hubs</li>
+            <li>राष्ट्रीय हथकरघा विकास निगम (NHDC) सूत डिपो</li>
+            <li>खादी एवं ग्रामोद्योग (KVIC) कच्चा माल वितरण</li>
+            <li>कृषि एपीएमसी कोल्ड स्टोरेज एवं फसल उपरांत प्रसंस्करण केंद्र</li>
           </ul>
         </div>
 
@@ -148,16 +147,16 @@ export const LocalOpportunitiesPage: React.FC = () => {
               </svg>
             </span>
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: isHighContrast ? '#ffffff' : '#0c2340' }}>
-              3. Forward Buyer Networks
+              3. संस्थागत बाजार व खरीदार नेटवर्क (Buyer Networks)
             </h2>
           </div>
           <p style={{ fontSize: '13px', lineHeight: 1.55, color: isHighContrast ? '#d1d5db' : '#475569', marginBottom: '12px' }}>
-            Links trained artisans directly with institutional procurement quotas and e-commerce platforms:
+            प्रशिक्षित कारीगरों को सीधे सरकारी खरीद कोटा एवं ई-कॉमर्स प्लेटफॉर्म से जोड़ना:
           </p>
           <ul style={{ fontSize: '12px', color: isHighContrast ? '#9ca3af' : '#64748b', paddingLeft: '18px', margin: 0, lineHeight: 1.6 }}>
-            <li>Government e-Marketplace (GeM) public procurement for SC enterprises</li>
-            <li>TRIFED & state tribal/social welfare emporiums</li>
-            <li>Direct consumer e-commerce onboarding assistance</li>
+            <li>गवर्नमेंट ई-मार्केटप्लेस (GeM) पर अनुसूचित जाति (SC) उद्यमों हेतु खरीद</li>
+            <li>ट्राइफेड (TRIFED) एवं राज्य हस्तशिल्प एम्पोरियम</li>
+            <li>डिजिटल प्लेटफॉर्म पर सीधे उपभोक्ता बिक्री सहायता</li>
           </ul>
         </div>
       </div>
@@ -180,10 +179,10 @@ export const LocalOpportunitiesPage: React.FC = () => {
           <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M15 10H5M9 14l-4-4 4-4" />
           </svg>
-          <span>Back to Beneficiary Profile</span>
+          <span>लाभार्थी प्रोफाइल पर वापस जाएँ (Back to Profile)</span>
         </Link>
         <Link to="/recommendations" className="jm-btn jm-btn-primary">
-          <span>Proceed to Skill Recommendations</span>
+          <span>कौशल अनुशंसाएं देखें (View Skill Recommendations)</span>
           <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 10h10M11 6l4 4-4 4" />
           </svg>

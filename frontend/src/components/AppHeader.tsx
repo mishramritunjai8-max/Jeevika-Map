@@ -17,17 +17,17 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const getRouteTitle = () => {
     switch (location.pathname) {
       case '/mapping':
-        return 'District Livelihood Mapping';
+        return 'जिला आजीविका मैपिंग (District Mapping)';
       case '/profile':
-        return 'Beneficiary Profile Assessment';
+        return 'लाभार्थी प्रोफाइल (Beneficiary Profile)';
       case '/opportunities':
-        return 'Local District Opportunities';
+        return 'स्थानीय अवसर (Local Opportunities)';
       case '/recommendations':
-        return 'NSQF Skilling Recommendations';
+        return 'कौशल अनुशंसाएं (Skill Recommendations)';
       case '/action-plan':
-        return 'PM-AJAY Convergence Action Plan';
+        return 'पीएम-अजय कार्य योजना (Action Plan)';
       default:
-        return 'Application Workspace';
+        return 'आजीविका कार्यक्षेत्र (Workspace)';
     }
   };
 
@@ -184,7 +184,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             }}
           />
           <span style={{ color: isHighContrast ? '#d1d5db' : '#64748b' }}>
-            Pilot Desk: <strong>Model Cluster (SC)</strong>
+            पायलट डेस्क: <strong>मॉडल क्लस्टर (SC)</strong>
           </span>
         </div>
 
@@ -209,7 +209,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polyline points="15 18 9 12 15 6" />
           </svg>
-          <span>Portal Home</span>
+          <span>मुख्य पोर्टल / Portal Home</span>
         </Link>
       </div>
     </header>

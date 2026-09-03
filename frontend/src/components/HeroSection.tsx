@@ -168,7 +168,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   letterSpacing: '0.01em',
                 }}
               >
-                PM-AJAY Livelihood Convergence & NSQF Skilling
+                पीएम-अजय आजीविका अभिसरण एवं एनएसक्यूएफ कौशल • PM-AJAY Livelihood Intelligence
               </span>
             </div>
 
@@ -177,34 +177,45 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
               id="hero-title"
               style={{
                 fontSize: 'clamp(28px, 4vw, 42px)',
-                lineHeight: 1.18,
+                lineHeight: 1.2,
                 fontWeight: 800,
                 color: isHighContrast ? '#ffffff' : '#0c2340',
                 marginBottom: '18px',
                 letterSpacing: '-0.025em',
               }}
             >
-              Mapping Grassroots Potential. <br />
+              अपनी आजीविका का सही रास्ता खोजें। <br />
               <span style={{ color: isHighContrast ? '#ff9933' : '#c2410c' }}>
-                Bridging NSQF Pathways.
+                एनएसक्यूएफ प्रमाणित कौशल से जुड़ें।
+              </span>
+              <span
+                style={{
+                  display: 'block',
+                  fontSize: 'clamp(15px, 2vw, 19px)',
+                  fontWeight: 600,
+                  color: isHighContrast ? '#9ca3af' : '#64748b',
+                  marginTop: '6px',
+                  letterSpacing: '0',
+                }}
+              >
+                Find the right livelihood pathway • NSQF Skilling Trajectories
               </span>
             </h1>
 
             {/* Clear, Respectful Public Sector Explanation */}
             <p
               style={{
-                fontSize: '16.5px',
-                lineHeight: 1.6,
+                fontSize: '15.5px',
+                lineHeight: 1.65,
                 color: isHighContrast ? '#e2e8f0' : '#334155',
                 marginBottom: '28px',
                 maxWidth: '580px',
               }}
             >
-              Jeevika Map is an intelligent livelihood mapping and NSQF-aligned skilling
-              recommendation platform under <strong>PM-AJAY</strong>. We systematically evaluate
-              traditional craftsmanship, local district demand, and informal competencies to
-              build accredited, economically sustainable livelihood trajectories for Scheduled
-              Caste communities.
+              <strong>जीविका मैप (Jeevika Map)</strong> अनुसूचित जाति (SC) समुदाय के हुनरमंद कारीगरों,
+              श्रमिकों एवं युवाओं हेतु <strong>पीएम-अजय (PM-AJAY)</strong> अंतर्गत एक बुद्धिमान आजीविका
+              मार्गदर्शन मंच है। यह आपके पारंपरिक हुनर, स्थानीय जिले की औद्योगिक मांग एवं व्यावहारिक अनुभव का
+              मूल्यांकन कर प्रमाणित आय के स्थायी अवसर तैयार करता है।
             </p>
 
             {/* Action Group */}
@@ -224,9 +235,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   padding: '12px 24px',
                   fontSize: '15px',
                   fontWeight: 700,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
                 }}
               >
-                <span>Start Livelihood Mapping</span>
+                <span>आजीविका मैपिंग शुरू करें (Start Mapping)</span>
                 <svg
                   width="16"
                   height="16"
@@ -250,7 +264,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   fontSize: '15px',
                 }}
               >
-                <span>Explore How It Works</span>
+                <span>यह कैसे काम करता है (How It Works)</span>
               </a>
             </div>
 
@@ -279,7 +293,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>NCVET / NSQF Standard Matrix</span>
+                <span>एनसीवीईटी / एनएसक्यूएफ मानक (NCVET NSQF)</span>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -295,7 +309,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>District Demand Synchronized</span>
+                <span>जिला मांग आधारित (District Demand)</span>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -311,7 +325,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Direct PM-AJAY Grant Linkage</span>
+                <span>पीएम-अजय प्रत्यक्ष अनुदान (PM-AJAY Grant)</span>
               </div>
             </div>
           </div>
@@ -353,18 +367,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                   <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
-                    Layer 01 • District Market Grid
+                    स्तर 01 • जिला बाजार ग्रिड (District Market Grid)
                   </span>
-                  <span style={{ fontSize: '11px', color: '#15803d', fontWeight: 600 }}>● Active Clusters</span>
+                  <span style={{ fontSize: '11px', color: '#15803d', fontWeight: 600 }}>● सक्रिय क्लस्टर (Active)</span>
                 </div>
                 <div style={{ display: 'flex', gap: '8px', fontSize: '12px', color: '#334155' }}>
                   <div style={{ flex: 1, backgroundColor: isHighContrast ? '#27272a' : '#ffffff', padding: '8px', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontWeight: 600, color: '#0f172a' }}>Raw Materials</div>
-                    <div style={{ fontSize: '11px', color: '#64748b' }}>Silk & Agro Hubs</div>
+                    <div style={{ fontWeight: 600, color: '#0f172a' }}>कच्चा माल / Raw Material</div>
+                    <div style={{ fontSize: '11px', color: '#64748b' }}>रेशम एवं कृषि केंद्र (Silk & Agro)</div>
                   </div>
                   <div style={{ flex: 1, backgroundColor: isHighContrast ? '#27272a' : '#ffffff', padding: '8px', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontWeight: 600, color: '#0f172a' }}>Local Demand</div>
-                    <div style={{ fontSize: '11px', color: '#64748b' }}>High Absorption</div>
+                    <div style={{ fontWeight: 600, color: '#0f172a' }}>स्थानीय मांग / Demand</div>
+                    <div style={{ fontSize: '11px', color: '#64748b' }}>उच्च खपत (High Absorption)</div>
                   </div>
                 </div>
               </div>
@@ -385,10 +399,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                   <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#c2410c', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                    Layer 02 • Beneficiary Livelihood Profile
+                    स्तर 02 • लाभार्थी आजीविका प्रोफाइल (Beneficiary Profile)
                   </span>
                   <span className="jm-badge jm-badge-saffron" style={{ fontSize: '10px', padding: '2px 6px' }}>
-                    Verified SC Household
+                    सत्यापित SC परिवार
                   </span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -411,10 +425,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   </div>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '13.5px', color: isHighContrast ? '#ffffff' : '#0f172a' }}>
-                      Rajesh Kumar (Age 34)
+                      राजेश कुमार (आयु 34 वर्ष) / Rajesh Kumar
                     </div>
                     <div style={{ fontSize: '12px', color: isHighContrast ? '#d1d5db' : '#64748b' }}>
-                      Informal Handloom Artisan • 9 Yrs Experience
+                      पारंपरिक हथकरघा कारीगर • 9 वर्ष का अनुभव (9 Yrs Exp)
                     </div>
                   </div>
                 </div>
@@ -438,7 +452,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                   <div>
                     <span className="jm-badge jm-badge-green" style={{ marginBottom: '6px' }}>
-                      Recommended Pathway
+                      अनुशंसित आजीविका मार्ग / Recommended Pathway
                     </span>
                     <h2
                       style={{
@@ -448,7 +462,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                         marginTop: '4px',
                       }}
                     >
-                      Master Jacquard Weaver & Jacquard CAD Designer
+                      मास्टर जैकार्ड बुनकर एवं सीएडी डिजाइनर (Master Jacquard Weaver)
                     </h2>
                   </div>
                 </div>
@@ -467,27 +481,27 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   }}
                 >
                   <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>NSQF LEVEL</span>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>एनएसक्यूएफ लेवल / LEVEL</span>
                     <strong style={{ color: isHighContrast ? '#ffffff' : '#0f172a', fontSize: '13px' }}>
-                      Level 4 (Accredited)
+                      Level 4 (प्रमाणित)
                     </strong>
                   </div>
                   <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>SCHEME CONVERGENCE</span>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>योजना सहायता / SCHEME</span>
                     <strong style={{ color: '#c2410c', fontSize: '13px' }}>
-                      PM-AJAY Capital Subsidy
+                      PM-AJAY टूलकिट अनुदान
                     </strong>
                   </div>
                   <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>ESTIMATED INCOME</span>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>अनुमानित मासिक आय / INCOME</span>
                     <strong style={{ color: '#15803d', fontSize: '13px' }}>
-                      ₹24,000 – ₹32,000 / mo
+                      ₹24,000 – ₹32,000 / माह
                     </strong>
                   </div>
                   <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>TRAINING HUB</span>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>प्रशिक्षण केंद्र / TRAINING HUB</span>
                     <strong style={{ color: isHighContrast ? '#ffffff' : '#0f172a', fontSize: '13px' }}>
-                      Varanasi Cluster Center
+                      वाराणसी क्लस्टर सेंटर
                     </strong>
                   </div>
                 </div>
@@ -502,8 +516,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                     paddingTop: '6px',
                   }}
                 >
-                  <span>QP-NOS Code: TSC/Q7303</span>
-                  <span style={{ color: '#15803d', fontWeight: 600 }}>98% Compatibility</span>
+                  <span>QP-NOS कोड: TSC/Q7303</span>
+                  <span style={{ color: '#15803d', fontWeight: 600 }}>98% अनुकूलता (Match)</span>
                 </div>
               </div>
             </div>
