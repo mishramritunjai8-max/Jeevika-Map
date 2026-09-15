@@ -1,27 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface HeroSectionProps {
   isHighContrast?: boolean;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false }) => {
-  // Gentle interactive 3D tilt state
-  const [tilt, setTilt] = useState({ rotateX: 6, rotateY: -8 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    // Restrained, subtle angles (max ±7 deg)
-    const rotateY = parseFloat((x / 30).toFixed(2));
-    const rotateX = parseFloat((-y / 30).toFixed(2));
-    setTilt({ rotateX, rotateY });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ rotateX: 6, rotateY: -8 });
-  };
-
   // Pre-calculated 24 spokes for the Ashoka Chakra (360 / 24 = 15 deg per spoke)
   const chakraSpokes = Array.from({ length: 24 }, (_, i) => i * 15);
 
@@ -31,25 +14,44 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
       aria-labelledby="hero-title"
       style={{
         position: 'relative',
-        backgroundColor: isHighContrast ? '#000000' : '#ffffff',
-        borderBottom: `1px solid ${isHighContrast ? '#ffffff' : '#e2e8f0'}`,
+        backgroundColor: isHighContrast ? '#000000' : '#f0f6ff',
+        backgroundImage: isHighContrast ? 'none' : "url('/hero-flag-bg.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center right',
+        backgroundRepeat: 'no-repeat',
+        borderBottom: `1px solid ${isHighContrast ? '#ffffff' : '#cbd5e1'}`,
         overflow: 'hidden',
-        paddingTop: '48px',
-        paddingBottom: '64px',
+        paddingTop: '52px',
+        paddingBottom: '68px',
       }}
     >
-      {/* Subtle Ashoka Chakra Geometric Vector Background */}
+      {/* Soft Sky-Blue / Light Tint Gradient Overlay for Optimal Foreground Contrast */}
+      {!isHighContrast && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(90deg, rgba(240, 246, 255, 0.96) 0%, rgba(240, 246, 255, 0.88) 45%, rgba(255, 255, 255, 0.35) 75%, rgba(255, 255, 255, 0.12) 100%)',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
+      )}
+
+      {/* Subtle Ashoka Chakra Geometric Vector Overlay */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
           top: '50%',
-          right: '-120px',
+          right: '-100px',
           transform: 'translateY(-50%)',
-          width: '680px',
-          height: '680px',
+          width: '640px',
+          height: '640px',
           pointerEvents: 'none',
-          opacity: isHighContrast ? 0.08 : 0.038,
+          opacity: isHighContrast ? 0.08 : 0.045,
           zIndex: 0,
         }}
       >
@@ -100,8 +102,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 padding: '5px 12px 5px 6px',
                 borderRadius: '4px',
                 border: `1px solid ${isHighContrast ? '#ffffff' : '#cbd5e1'}`,
-                backgroundColor: isHighContrast ? '#111827' : '#f8fafc',
+                backgroundColor: isHighContrast ? '#111827' : 'rgba(255, 255, 255, 0.92)',
+                backdropFilter: 'blur(6px)',
+                WebkitBackdropFilter: 'blur(6px)',
                 marginBottom: '20px',
+                boxShadow: '0 1px 3px rgba(12, 35, 64, 0.05)',
               }}
             >
               {/* Official Indian Flag Vector (Accurate 3:2 Ratio with 24-spoke Ashoka Chakra) */}
@@ -180,7 +185,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 lineHeight: 1.2,
                 fontWeight: 800,
                 color: isHighContrast ? '#ffffff' : '#0c2340',
-                marginBottom: '18px',
+                marginBottom: '16px',
                 letterSpacing: '-0.025em',
               }}
             >
@@ -193,7 +198,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   display: 'block',
                   fontSize: 'clamp(15px, 2vw, 19px)',
                   fontWeight: 600,
-                  color: isHighContrast ? '#9ca3af' : '#64748b',
+                  color: isHighContrast ? '#9ca3af' : '#475569',
                   marginTop: '6px',
                   letterSpacing: '0',
                 }}
@@ -202,21 +207,104 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
               </span>
             </h1>
 
-            {/* Clear, Respectful Public Sector Explanation */}
-            <p
+            {/* Compact Livelihood Value Badge Row (SKILL • EMPLOYMENT • LIVELIHOOD) */}
+            <div
               style={{
-                fontSize: '15.5px',
-                lineHeight: 1.65,
-                color: isHighContrast ? '#e2e8f0' : '#334155',
+                display: 'inline-flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '8px 16px',
+                backgroundColor: isHighContrast ? '#111827' : 'rgba(255, 255, 255, 0.92)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                borderRadius: '8px',
+                border: `1px solid ${isHighContrast ? '#ffffff' : '#cbd5e1'}`,
+                boxShadow: '0 2px 8px rgba(12, 35, 64, 0.05)',
                 marginBottom: '28px',
-                maxWidth: '580px',
               }}
             >
-              <strong>जीविका मैप (Jeevika Map)</strong> अनुसूचित जाति (SC) समुदाय के हुनरमंद कारीगरों,
-              श्रमिकों एवं युवाओं हेतु <strong>पीएम-अजय (PM-AJAY)</strong> अंतर्गत एक बुद्धिमान आजीविका
-              मार्गदर्शन मंच है। यह आपके पारंपरिक हुनर, स्थानीय जिले की औद्योगिक मांग एवं व्यावहारिक अनुभव का
-              मूल्यांकन कर प्रमाणित आय के स्थायी अवसर तैयार करता है।
-            </p>
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '15px',
+                  fontWeight: 700,
+                  color: isHighContrast ? '#ffffff' : '#0c2340',
+                }}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={isHighContrast ? '#22c55e' : '#15803d'}
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                </svg>
+                सही कौशल
+              </span>
+
+              <span style={{ color: isHighContrast ? '#ff9933' : '#c2410c', fontWeight: 800 }}>•</span>
+
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '15px',
+                  fontWeight: 700,
+                  color: isHighContrast ? '#ffffff' : '#0c2340',
+                }}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={isHighContrast ? '#ff9933' : '#c2410c'}
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
+                सही रोज़गार
+              </span>
+
+              <span style={{ color: isHighContrast ? '#ff9933' : '#c2410c', fontWeight: 800 }}>•</span>
+
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '15px',
+                  fontWeight: 700,
+                  color: isHighContrast ? '#ffffff' : '#0c2340',
+                }}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={isHighContrast ? '#60a5fa' : '#1e40af'}
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+                स्थायी आजीविका
+              </span>
+            </div>
 
             {/* Action Group */}
             <div
@@ -330,194 +418,216 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
             </div>
           </div>
 
-          {/* Right Column: 3D Depth Isometric Representation (Mapping + Data + Human Livelihood) */}
+          {/* Right Column: Realistic Aspirational Hero Visual with Floating Concept Badges */}
           <div
-            className="perspective-stage"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
             style={{
+              position: 'relative',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              padding: '20px 10px',
+              padding: '10px 0',
+              minHeight: '440px',
             }}
           >
+            {/* Soft Ambient Radial Glow Behind the Visual */}
             <div
-              className="card-3d-deck"
+              aria-hidden="true"
               style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
                 width: '100%',
-                maxWidth: '430px',
+                height: '100%',
+                maxWidth: '480px',
+                maxHeight: '480px',
+                background: isHighContrast
+                  ? 'radial-gradient(circle, rgba(30,58,138,0.25) 0%, transparent 70%)'
+                  : 'radial-gradient(circle, rgba(194,65,12,0.06) 0%, rgba(12,35,64,0.04) 40%, transparent 70%)',
+                filter: 'blur(32px)',
+                pointerEvents: 'none',
+                zIndex: 0,
+              }}
+            />
+
+            {/* Visual Container with Seamless Edge Blending */}
+            <div
+              style={{
                 position: 'relative',
-                transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
-                transformOrigin: 'center center',
+                width: '100%',
+                maxWidth: '520px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 1,
               }}
             >
-              {/* Layer 1 (Base/Back Layer): District Geospatial & Market Demand Grid */}
-              <div
+              {/* Main Realistic Hero Image */}
+              <img
+                src="/hero-visual.jpg"
+                alt="ग्रामीण एवं अर्ध-शहरी नागरिक स्मार्टफोन पर जीविका मैप पोर्टल का उपयोग करते हुए (Citizens using Jeevika Map on smartphone)"
                 style={{
-                  backgroundColor: isHighContrast ? '#18181b' : '#f8fafc',
-                  border: `1px solid ${isHighContrast ? '#ffffff' : '#cbd5e1'}`,
-                  borderRadius: '8px',
-                  padding: '16px',
-                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.06)',
-                  marginBottom: '-40px',
-                  transform: 'translateZ(-30px) scale(0.93)',
-                  opacity: 0.85,
+                  width: '100%',
+                  height: 'auto',
+                  maxHeight: '460px',
+                  objectFit: 'contain',
+                  borderRadius: '12px',
+                  filter: isHighContrast
+                    ? 'contrast(1.15) brightness(0.95)'
+                    : 'drop-shadow(0 16px 36px rgba(12, 35, 64, 0.09))',
+                  maskImage: 'radial-gradient(ellipse 96% 92% at 52% 50%, black 72%, transparent 100%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse 96% 92% at 52% 50%, black 72%, transparent 100%)',
+                  transition: 'transform 0.3s ease',
                 }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
-                    स्तर 01 • जिला बाजार ग्रिड (District Market Grid)
-                  </span>
-                  <span style={{ fontSize: '11px', color: '#15803d', fontWeight: 600 }}>● सक्रिय क्लस्टर (Active)</span>
-                </div>
-                <div style={{ display: 'flex', gap: '8px', fontSize: '12px', color: '#334155' }}>
-                  <div style={{ flex: 1, backgroundColor: isHighContrast ? '#27272a' : '#ffffff', padding: '8px', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontWeight: 600, color: '#0f172a' }}>कच्चा माल / Raw Material</div>
-                    <div style={{ fontSize: '11px', color: '#64748b' }}>रेशम एवं कृषि केंद्र (Silk & Agro)</div>
-                  </div>
-                  <div style={{ flex: 1, backgroundColor: isHighContrast ? '#27272a' : '#ffffff', padding: '8px', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontWeight: 600, color: '#0f172a' }}>स्थानीय मांग / Demand</div>
-                    <div style={{ fontSize: '11px', color: '#64748b' }}>उच्च खपत (High Absorption)</div>
-                  </div>
-                </div>
-              </div>
+              />
 
-              {/* Layer 2 (Middle Layer): Beneficiary Informal Profile & Skills */}
+              {/* Floating Concept 1: कौशल प्रशिक्षण (Top Right) */}
               <div
+                className="floating-chip-1"
                 style={{
-                  backgroundColor: isHighContrast ? '#1f2937' : '#ffffff',
-                  border: `1.5px solid ${isHighContrast ? '#ff9933' : '#fed7aa'}`,
+                  position: 'absolute',
+                  top: '12px',
+                  right: '-10px',
+                  backgroundColor: isHighContrast ? '#111827' : 'rgba(255, 255, 255, 0.94)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  border: `1.5px solid ${isHighContrast ? '#22c55e' : '#bbf7d0'}`,
                   borderRadius: '8px',
-                  padding: '18px',
-                  boxShadow: isHighContrast ? 'none' : '0 10px 18px -4px rgba(12, 35, 64, 0.08)',
-                  marginBottom: '-32px',
-                  transform: 'translateZ(10px) scale(0.97)',
-                  position: 'relative',
+                  padding: '8px 14px',
+                  boxShadow: isHighContrast
+                    ? '0 4px 12px rgba(0,0,0,0.5)'
+                    : '0 10px 24px -4px rgba(12, 35, 64, 0.12), 0 2px 6px rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
                   zIndex: 2,
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                  <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#c2410c', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                    स्तर 02 • लाभार्थी आजीविका प्रोफाइल (Beneficiary Profile)
-                  </span>
-                  <span className="jm-badge jm-badge-saffron" style={{ fontSize: '10px', padding: '2px 6px' }}>
-                    सत्यापित SC परिवार
-                  </span>
+                <div
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '6px',
+                    backgroundColor: isHighContrast ? '#14532d' : '#f0fdf4',
+                    color: isHighContrast ? '#86efac' : '#15803d',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                  </svg>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '50%',
-                      backgroundColor: isHighContrast ? '#374151' : '#eff6ff',
-                      color: '#1e3a8a',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: 700,
-                      fontSize: '14px',
-                      border: '1px solid #bfdbfe',
-                    }}
-                  >
-                    RK
+                <div>
+                  <div style={{ fontSize: '13px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', lineHeight: 1.2 }}>
+                    कौशल प्रशिक्षण
                   </div>
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: '13.5px', color: isHighContrast ? '#ffffff' : '#0f172a' }}>
-                      राजेश कुमार (आयु 34 वर्ष) / Rajesh Kumar
-                    </div>
-                    <div style={{ fontSize: '12px', color: isHighContrast ? '#d1d5db' : '#64748b' }}>
-                      पारंपरिक हथकरघा कारीगर • 9 वर्ष का अनुभव (9 Yrs Exp)
-                    </div>
+                  <div style={{ fontSize: '10.5px', fontWeight: 600, color: isHighContrast ? '#86efac' : '#15803d' }}>
+                    NSQF Level 1–8 • NCVET
                   </div>
                 </div>
               </div>
 
-              {/* Layer 3 (Top / Elevated Layer): NSQF Aligned Recommendation & PM-AJAY Linkage */}
+              {/* Floating Concept 2: रोज़गार अवसर (Middle Left) */}
               <div
+                className="floating-chip-2"
                 style={{
-                  backgroundColor: isHighContrast ? '#111827' : '#ffffff',
-                  border: `2px solid ${isHighContrast ? '#ffffff' : '#0c2340'}`,
+                  position: 'absolute',
+                  top: '46%',
+                  left: '-16px',
+                  transform: 'translateY(-50%)',
+                  backgroundColor: isHighContrast ? '#111827' : 'rgba(255, 255, 255, 0.95)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  border: `1.5px solid ${isHighContrast ? '#ff9933' : '#fed7aa'}`,
                   borderRadius: '8px',
-                  padding: '20px',
+                  padding: '8px 14px',
                   boxShadow: isHighContrast
-                    ? '0 0 0 2px #ffffff'
-                    : '0 24px 38px -12px rgba(12, 35, 64, 0.16), 0 8px 16px -4px rgba(12, 35, 64, 0.08)',
-                  transform: 'translateZ(45px)',
-                  position: 'relative',
-                  zIndex: 3,
+                    ? '0 4px 12px rgba(0,0,0,0.5)'
+                    : '0 12px 28px -6px rgba(194, 65, 12, 0.14), 0 2px 6px rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  zIndex: 2,
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                  <div>
-                    <span className="jm-badge jm-badge-green" style={{ marginBottom: '6px' }}>
-                      अनुशंसित आजीविका मार्ग / Recommended Pathway
-                    </span>
-                    <h2
-                      style={{
-                        fontSize: '16px',
-                        fontWeight: 800,
-                        color: isHighContrast ? '#ffffff' : '#0c2340',
-                        marginTop: '4px',
-                      }}
-                    >
-                      मास्टर जैकार्ड बुनकर एवं सीएडी डिजाइनर (Master Jacquard Weaver)
-                    </h2>
-                  </div>
-                </div>
-
                 <div
                   style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                    gap: '10px',
-                    margin: '14px 0',
-                    padding: '12px',
-                    backgroundColor: isHighContrast ? '#1f2937' : '#f8fafc',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '6px',
-                    border: `1px solid ${isHighContrast ? '#374151' : '#e2e8f0'}`,
-                    fontSize: '12px',
-                  }}
-                >
-                  <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>एनएसक्यूएफ लेवल / LEVEL</span>
-                    <strong style={{ color: isHighContrast ? '#ffffff' : '#0f172a', fontSize: '13px' }}>
-                      Level 4 (प्रमाणित)
-                    </strong>
-                  </div>
-                  <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>योजना सहायता / SCHEME</span>
-                    <strong style={{ color: '#c2410c', fontSize: '13px' }}>
-                      PM-AJAY टूलकिट अनुदान
-                    </strong>
-                  </div>
-                  <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>अनुमानित मासिक आय / INCOME</span>
-                    <strong style={{ color: '#15803d', fontSize: '13px' }}>
-                      ₹24,000 – ₹32,000 / माह
-                    </strong>
-                  </div>
-                  <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '10.5px' }}>प्रशिक्षण केंद्र / TRAINING HUB</span>
-                    <strong style={{ color: isHighContrast ? '#ffffff' : '#0f172a', fontSize: '13px' }}>
-                      वाराणसी क्लस्टर सेंटर
-                    </strong>
-                  </div>
-                </div>
-
-                <div
-                  style={{
+                    backgroundColor: isHighContrast ? '#451a03' : '#fff7ed',
+                    color: isHighContrast ? '#fdba74' : '#c2410c',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    fontSize: '11px',
-                    color: isHighContrast ? '#9ca3af' : '#64748b',
-                    paddingTop: '6px',
+                    justifyContent: 'center',
+                    flexShrink: 0,
                   }}
                 >
-                  <span>QP-NOS कोड: TSC/Q7303</span>
-                  <span style={{ color: '#15803d', fontWeight: 600 }}>98% अनुकूलता (Match)</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                  </svg>
+                </div>
+                <div>
+                  <div style={{ fontSize: '13px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', lineHeight: 1.2 }}>
+                    रोज़गार अवसर
+                  </div>
+                  <div style={{ fontSize: '10.5px', fontWeight: 600, color: isHighContrast ? '#fdba74' : '#c2410c' }}>
+                    जिला क्लस्टर मांग आधारित
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Concept 3: स्वरोज़गार (Bottom Right) */}
+              <div
+                className="floating-chip-3"
+                style={{
+                  position: 'absolute',
+                  bottom: '16px',
+                  right: '-6px',
+                  backgroundColor: isHighContrast ? '#111827' : 'rgba(255, 255, 255, 0.95)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  border: `1.5px solid ${isHighContrast ? '#60a5fa' : '#bfdbfe'}`,
+                  borderRadius: '8px',
+                  padding: '8px 14px',
+                  boxShadow: isHighContrast
+                    ? '0 4px 12px rgba(0,0,0,0.5)'
+                    : '0 12px 28px -6px rgba(12, 35, 64, 0.14), 0 2px 6px rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  zIndex: 2,
+                }}
+              >
+                <div
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '6px',
+                    backgroundColor: isHighContrast ? '#1e3a8a' : '#eff6ff',
+                    color: isHighContrast ? '#93c5fd' : '#1e40af',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                  </svg>
+                </div>
+                <div>
+                  <div style={{ fontSize: '13px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', lineHeight: 1.2 }}>
+                    स्वरोज़गार
+                  </div>
+                  <div style={{ fontSize: '10.5px', fontWeight: 600, color: isHighContrast ? '#93c5fd' : '#1e40af' }}>
+                    पीएम-अजय टूलकिट व अनुदान
+                  </div>
                 </div>
               </div>
             </div>
@@ -525,7 +635,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
         </div>
       </div>
 
-      {/* Embedded CSS for 3D and responsive grid */}
+      {/* Embedded CSS for Chakra and floating badges animation */}
       <style>{`
         @keyframes slowChakraRotate {
           from {
@@ -536,10 +646,58 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
           }
         }
 
+        @keyframes badgeFloat1 {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-5px);
+          }
+        }
+
+        @keyframes badgeFloat2 {
+          0%, 100% {
+            transform: translateY(-50%) translateX(0px);
+          }
+          50% {
+            transform: translateY(-50%) translateX(-4px);
+          }
+        }
+
+        @keyframes badgeFloat3 {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(4px);
+          }
+        }
+
+        .floating-chip-1 {
+          animation: badgeFloat1 4s ease-in-out infinite;
+        }
+
+        .floating-chip-2 {
+          animation: badgeFloat2 5s ease-in-out infinite 0.5s;
+        }
+
+        .floating-chip-3 {
+          animation: badgeFloat3 4.5s ease-in-out infinite 1s;
+        }
+
         @media (max-width: 960px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
             gap: 40px !important;
+          }
+          .floating-chip-1 {
+            right: 0 !important;
+          }
+          .floating-chip-2 {
+            left: 0 !important;
+          }
+          .floating-chip-3 {
+            right: 0 !important;
           }
         }
       `}</style>
