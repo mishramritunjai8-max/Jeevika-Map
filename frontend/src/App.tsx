@@ -15,6 +15,7 @@ import { OfficerDashboardPage } from './pages/officer/OfficerDashboardPage';
 import { OfficerRegistryPage } from './pages/officer/OfficerRegistryPage';
 import { OfficerBeneficiaryDetailPage } from './pages/officer/OfficerBeneficiaryDetailPage';
 import { OfficerLoginPage } from './pages/officer/OfficerLoginPage';
+import { JeevikaSaathiChatbot } from './components/chat/JeevikaSaathiChatbot';
 
 export const App: React.FC = () => {
   return (
@@ -54,6 +55,9 @@ export const App: React.FC = () => {
             {/* Fallback to Home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+
+          {/* Floating AI Livelihood Assistant */}
+          <JeevikaSaathiChatbot />
         </BrowserRouter>
       </OfficerAuthProvider>
     </AccessibilityProvider>
