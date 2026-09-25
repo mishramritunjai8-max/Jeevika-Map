@@ -1,10 +1,12 @@
 import React from 'react';
+import { useTranslation } from '../i18n/useTranslation';
 
 interface HeroSectionProps {
   isHighContrast?: boolean;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false }) => {
+  const { t } = useTranslation();
   // Pre-calculated 24 spokes for the Ashoka Chakra (360 / 24 = 15 deg per spoke)
   const chakraSpokes = Array.from({ length: 24 }, (_, i) => i * 15);
 
@@ -173,7 +175,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   letterSpacing: '0.01em',
                 }}
               >
-                पीएम-अजय आजीविका अभिसरण एवं एनएसक्यूएफ कौशल • PM-AJAY Livelihood Intelligence
+                {t.heroBadge}
               </span>
             </div>
 
@@ -181,17 +183,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
             <h1
               id="hero-title"
               style={{
-                fontSize: 'clamp(28px, 4vw, 42px)',
-                lineHeight: 1.2,
-                fontWeight: 800,
-                color: isHighContrast ? '#ffffff' : '#0c2340',
                 marginBottom: '16px',
-                letterSpacing: '-0.025em',
               }}
             >
-              अपनी आजीविका का सही रास्ता खोजें। <br />
-              <span style={{ color: isHighContrast ? '#ff9933' : '#c2410c' }}>
-                एनएसक्यूएफ प्रमाणित कौशल से जुड़ें।
+              <span
+                style={{
+                  display: 'block',
+                  fontSize: 'clamp(18px, 2.2vw, 24px)',
+                  lineHeight: 1.4,
+                  fontWeight: 600,
+                  fontStyle: 'italic',
+                  fontFamily: "'Inter', 'Noto Sans Devanagari', 'Segoe UI', system-ui, -apple-system, sans-serif",
+                  color: isHighContrast ? '#ffffff' : '#0c2340',
+                  letterSpacing: '0.01em',
+                }}
+              >
+                {t.heroHeadline1} <br />
+                <span style={{ color: isHighContrast ? '#ff9933' : '#c2410c' }}>
+                  {t.heroHeadline2}
+                </span>
               </span>
               <span
                 style={{
@@ -201,9 +211,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   color: isHighContrast ? '#9ca3af' : '#475569',
                   marginTop: '6px',
                   letterSpacing: '0',
+                  fontStyle: 'normal',
                 }}
               >
-                Find the right livelihood pathway • NSQF Skilling Trajectories
+                {t.heroSubtitle}
               </span>
             </h1>
 
@@ -247,7 +258,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                   <path d="M6 12v5c3 3 9 3 12 0v-5" />
                 </svg>
-                सही कौशल
+                {t.heroPillSkill}
               </span>
 
               <span style={{ color: isHighContrast ? '#ff9933' : '#c2410c', fontWeight: 800 }}>•</span>
@@ -275,7 +286,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                 </svg>
-                सही रोज़गार
+                {t.heroPillJob}
               </span>
 
               <span style={{ color: isHighContrast ? '#ff9933' : '#c2410c', fontWeight: 800 }}>•</span>
@@ -302,7 +313,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 >
                   <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                 </svg>
-                स्थायी आजीविका
+                {t.heroPillSelf}
               </span>
             </div>
 
@@ -328,7 +339,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   gap: '8px',
                 }}
               >
-                <span>आजीविका मैपिंग शुरू करें (Start Mapping)</span>
+                <span>{t.heroPrimaryCta}</span>
                 <svg
                   width="16"
                   height="16"
@@ -352,7 +363,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                   fontSize: '15px',
                 }}
               >
-                <span>यह कैसे काम करता है (How It Works)</span>
+                <span>{t.heroSecondaryCta}</span>
               </a>
             </div>
 
@@ -381,7 +392,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>एनसीवीईटी / एनएसक्यूएफ मानक (NCVET NSQF)</span>
+                <span>{t.pillar3Title}</span>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -397,7 +408,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>जिला मांग आधारित (District Demand)</span>
+                <span>{t.pillar2Title}</span>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -413,7 +424,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>पीएम-अजय प्रत्यक्ष अनुदान (PM-AJAY Grant)</span>
+                <span>{t.pillar1Title}</span>
               </div>
             </div>
           </div>
@@ -465,7 +476,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
               {/* Main Realistic Hero Image */}
               <img
                 src="/hero-visual.jpg"
-                alt="ग्रामीण एवं अर्ध-शहरी नागरिक स्मार्टफोन पर जीविका मैप पोर्टल का उपयोग करते हुए (Citizens using Jeevika Map on smartphone)"
+                alt="Jeevika Map Livelihood Convergence Portal"
                 style={{
                   width: '100%',
                   height: 'auto',
@@ -481,7 +492,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 }}
               />
 
-              {/* Floating Concept 1: कौशल प्रशिक्षण (Top Right) */}
+              {/* Floating Concept 1: कौशल प्रशिक्षण / Skill Training (Top Right) */}
               <div
                 className="floating-chip-1"
                 style={{
@@ -523,7 +534,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 </div>
                 <div>
                   <div style={{ fontSize: '13px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', lineHeight: 1.2 }}>
-                    कौशल प्रशिक्षण
+                    {t.heroPillSkill}
                   </div>
                   <div style={{ fontSize: '10.5px', fontWeight: 600, color: isHighContrast ? '#86efac' : '#15803d' }}>
                     NSQF Level 1–8 • NCVET
@@ -531,7 +542,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 </div>
               </div>
 
-              {/* Floating Concept 2: रोज़गार अवसर (Middle Left) */}
+              {/* Floating Concept 2: रोज़गार अवसर / Employment (Middle Left) */}
               <div
                 className="floating-chip-2"
                 style={{
@@ -574,15 +585,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 </div>
                 <div>
                   <div style={{ fontSize: '13px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', lineHeight: 1.2 }}>
-                    रोज़गार अवसर
+                    {t.heroPillJob}
                   </div>
                   <div style={{ fontSize: '10.5px', fontWeight: 600, color: isHighContrast ? '#fdba74' : '#c2410c' }}>
-                    जिला क्लस्टर मांग आधारित
+                    {t.pillar2Title}
                   </div>
                 </div>
               </div>
 
-              {/* Floating Concept 3: स्वरोज़गार (Bottom Right) */}
+              {/* Floating Concept 3: स्वरोज़गार / Self-Employment (Bottom Right) */}
               <div
                 className="floating-chip-3"
                 style={{
@@ -623,10 +634,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isHighContrast = false
                 </div>
                 <div>
                   <div style={{ fontSize: '13px', fontWeight: 800, color: isHighContrast ? '#ffffff' : '#0c2340', lineHeight: 1.2 }}>
-                    स्वरोज़गार
+                    {t.heroPillSelf}
                   </div>
                   <div style={{ fontSize: '10.5px', fontWeight: 600, color: isHighContrast ? '#93c5fd' : '#1e40af' }}>
-                    पीएम-अजय टूलकिट व अनुदान
+                    {t.pillar1Title}
                   </div>
                 </div>
               </div>

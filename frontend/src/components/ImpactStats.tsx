@@ -1,38 +1,37 @@
 import React from 'react';
+import { useTranslation } from '../i18n/useTranslation';
 
 interface ImpactStatsProps {
   isHighContrast?: boolean;
 }
 
 export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false }) => {
+  const { t } = useTranslation();
+
   const metrics = [
     {
-      metric: '12+',
-      labelHi: 'पायलट जिले मानचित्रित',
-      labelEn: 'Pilot Districts Mapped',
-      sublabel: 'यूपी, राजस्थान, एमपी, बिहार एवं तमिलनाडु के प्रमुख क्लस्टर क्षेत्र',
-      tag: 'पायलट मॉडल (Pilot Model)',
+      metric: t.stat1Num,
+      label: t.stat1Label,
+      sublabel: t.stat1Sub,
+      tag: t.stat1Tag,
     },
     {
-      metric: '180+',
-      labelHi: 'एनएसक्यूएफ जॉब रोल सूचीबद्ध',
-      labelEn: 'NSQF Job Roles Indexed',
-      sublabel: '14 सेक्टर स्किल काउंसिलों में मान्यता प्राप्त क्वालिफिकेशन पैक (QP-NOS)',
-      tag: 'एनसीवीईटी मानक (NCVET)',
+      metric: t.stat2Num,
+      label: t.stat2Label,
+      sublabel: t.stat2Sub,
+      tag: t.stat2Tag,
     },
     {
-      metric: '3.1x',
-      labelHi: 'औसत आय वृद्धि अनुमान',
-      labelEn: 'Average Income Delta',
-      sublabel: 'असंगठित मजदूरी की तुलना में प्रमाणित कारीगर उद्यम से अनुमानित पारिवारिक आय',
-      tag: 'प्रक्षेपित मॉडल (Projected)',
+      metric: t.stat3Num,
+      label: t.stat3Label,
+      sublabel: t.stat3Sub,
+      tag: t.stat3Tag,
     },
     {
-      metric: '100%',
-      labelHi: 'आवाज एवं मातृभाषा सुविधा',
-      labelEn: 'Voice & Vernacular Target',
-      sublabel: 'जमीनी प्रगणकों एवं नागरिकों हेतु सहज हिंदी एवं आवाज आधारित इनपुट',
-      tag: 'समावेशन मानक (Inclusion)',
+      metric: t.stat4Num,
+      label: t.stat4Label,
+      sublabel: t.stat4Sub,
+      tag: t.stat4Tag,
     },
   ];
 
@@ -50,7 +49,7 @@ export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false
         {/* Sample Metrics Disclaimer Alert Banner */}
         <div
           role="note"
-          aria-label="Simulation Notice"
+          aria-label={t.statNoticeTitle}
           style={{
             display: 'flex',
             alignItems: 'flex-start',
@@ -79,16 +78,14 @@ export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
           <div style={{ fontSize: '12.5px', color: isHighContrast ? '#ffedd5' : '#9a3412', lineHeight: 1.5 }}>
-            <strong>प्रदर्शन एवं पायलट प्रक्षेपण सूचना (Pilot Modeling Notice):</strong> नीचे प्रस्तुत मूल्य
-            प्रणाली सत्यापन हेतु मॉडल किए गए पायलट प्रक्षेपण हैं। इन्हें आधिकारिक जनगणना या सामाजिक न्याय एवं
-            अधिकारिता मंत्रालय के अंतिम लेखापरीक्षित आंकड़े न माना जाए।
+            <strong>{t.statNoticeTitle}:</strong> {t.statNoticeDesc}
           </div>
         </div>
 
         {/* Section Header */}
         <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 40px' }}>
           <span className="jm-badge jm-badge-navy" style={{ marginBottom: '10px' }}>
-            पायलट दायरा एवं प्रभाव / Pilot Scope & Modeling
+            {t.statBadge}
           </span>
           <h2
             id="impact-stats-title"
@@ -99,14 +96,13 @@ export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false
               marginBottom: '6px',
             }}
           >
-            पायलट क्लस्टर में संभावित प्रभाव
+            {t.statTitle}
           </h2>
           <div style={{ fontSize: '15px', fontWeight: 600, color: isHighContrast ? '#ff9933' : '#c2410c', marginBottom: '10px' }}>
-            Anticipated Impact in Pilot Clusters
+            {t.statSubtitle}
           </div>
           <p style={{ fontSize: '14.5px', color: isHighContrast ? '#d1d5db' : '#475569', lineHeight: 1.6 }}>
-            पीएम-अजय अंतर्गत अनुसूचित जाति (SC) समुदाय के हुनरमंद कारीगरों एवं युवाओं को
-            औपचारिक औद्योगिक मांग से जोड़ने हेतु तैयार किया गया मॉडल।
+            {t.statDesc}
           </p>
         </div>
 
@@ -168,21 +164,11 @@ export const ImpactStats: React.FC<ImpactStatsProps> = ({ isHighContrast = false
                   fontSize: '15px',
                   fontWeight: 700,
                   color: isHighContrast ? '#ffffff' : '#1e293b',
-                  marginBottom: '2px',
-                }}
-              >
-                {item.labelHi}
-              </h2>
-              <div
-                style={{
-                  fontSize: '11.5px',
-                  color: isHighContrast ? '#9ca3af' : '#64748b',
-                  fontWeight: 600,
                   marginBottom: '6px',
                 }}
               >
-                {item.labelEn}
-              </div>
+                {item.label}
+              </h2>
 
               <p
                 style={{

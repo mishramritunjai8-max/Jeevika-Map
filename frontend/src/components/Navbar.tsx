@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from '../i18n/useTranslation';
 
 interface NavbarProps {
   isHighContrast?: boolean;
@@ -6,14 +7,15 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   const navLinks = [
-    { labelHi: 'होम', labelEn: 'Home', href: '#hero' },
-    { labelHi: 'यह कैसे काम करता है', labelEn: 'How It Works', href: '#how-it-works' },
-    { labelHi: 'आजीविका के अवसर', labelEn: 'Livelihood Pathways', href: '#skills' },
-    { labelHi: 'पायलट प्रभाव', labelEn: 'Pilot Impact', href: '#impact-stats' },
-    { labelHi: 'हमारे बारे में', labelEn: 'About PM-AJAY', href: '#about' },
-    { labelHi: 'अधिकारी पोर्टल', labelEn: 'Officer Portal', href: '/officer/login' },
+    { label: t.navHome, href: '#hero' },
+    { label: t.navHowItWorks, href: '#how-it-works' },
+    { label: t.navPathways, href: '#skills' },
+    { label: t.navImpact, href: '#impact-stats' },
+    { label: t.navAbout, href: '#about' },
+    { label: t.navOfficer, href: '/officer/login' },
   ];
 
   return (
@@ -148,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
                 fontWeight: 500,
               }}
             >
-              आजीविका एवं एनएसक्यूएफ कौशल पोर्टल / Livelihood Intelligence Portal
+              {t.portalSubtitle}
             </p>
           </div>
         </a>
@@ -177,8 +179,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
                 transition: 'color 0.15s ease',
                 textDecoration: 'none',
                 display: 'inline-flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
+                alignItems: 'center',
                 lineHeight: 1.2,
               }}
               onMouseEnter={(e) => {
@@ -188,10 +189,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
                 e.currentTarget.style.color = isHighContrast ? '#f3f4f6' : '#334155';
               }}
             >
-              <span>{link.labelHi}</span>
-              <span style={{ fontSize: '10px', color: isHighContrast ? '#9ca3af' : '#64748b', fontWeight: 500 }}>
-                {link.labelEn}
-              </span>
+              <span>{link.label}</span>
             </a>
           ))}
         </nav>
@@ -210,7 +208,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
               gap: '6px',
             }}
           >
-            <span>आजीविका मैपिंग शुरू करें / Start Mapping</span>
+            <span>{t.startMappingBtn}</span>
             <svg
               width="15"
               height="15"
@@ -299,8 +297,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
                   textDecoration: 'none',
                 }}
               >
-                <span>{link.labelHi}</span>
-                <span style={{ fontSize: '11px', color: '#64748b' }}>{link.labelEn}</span>
+                <span>{link.label}</span>
               </a>
             ))}
             <div style={{ paddingTop: '8px' }}>
@@ -310,7 +307,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isHighContrast = false }) => {
                 className="jm-btn jm-btn-saffron"
                 style={{ width: '100%', boxSizing: 'border-box', textAlign: 'center' }}
               >
-                आजीविका मैपिंग शुरू करें / Start Livelihood Mapping
+                {t.startMappingBtn}
               </a>
             </div>
           </div>

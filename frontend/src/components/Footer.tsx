@@ -1,10 +1,13 @@
 import React from 'react';
+import { useTranslation } from '../i18n/useTranslation';
 
 interface FooterProps {
   isHighContrast?: boolean;
 }
 
 export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
+  const { t } = useTranslation();
+
   return (
     <footer
       role="contentinfo"
@@ -59,10 +62,10 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
               </span>
             </div>
             <p style={{ fontSize: '12.5px', color: '#94a3b8', margin: 0, marginBottom: '14px' }}>
-              प्रधानमंत्री अनुसूचित जाति अभ्युदय योजना (PM-AJAY) अंतर्गत आजीविका आसूचना, कौशल मानचित्रण एवं एनसीवीईटी-एनएसक्यूएफ त्वरित आजीविका फ्रेमवर्क।
+              {t.footerAboutDesc}
             </p>
             <p style={{ fontSize: '11.5px', color: '#64748b', margin: 0 }}>
-              सामाजिक न्याय एवं अधिकारिता मंत्रालय, भारत सरकार (Ministry of Social Justice & Empowerment, Govt. of India).
+              {t.footerMinistryDesc}
             </p>
           </div>
 
@@ -78,32 +81,32 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
                 marginBottom: '14px',
               }}
             >
-              पोर्टल अनुभाग / Portal Sections
+              {t.footerSectionsTitle}
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <li>
                 <a href="#hero" style={{ color: '#cbd5e1', textDecoration: 'none' }}>
-                  मुख्य पृष्ठ / Platform Home
+                  {t.footerHome}
                 </a>
               </li>
               <li>
                 <a href="#how-it-works" style={{ color: '#cbd5e1', textDecoration: 'none' }}>
-                  कार्यप्रणाली / How It Works
+                  {t.footerHowItWorks}
                 </a>
               </li>
               <li>
                 <a href="#skills" style={{ color: '#cbd5e1', textDecoration: 'none' }}>
-                  आजीविका एवं कौशल मार्ग / Livelihood Pathways
+                  {t.footerPathways}
                 </a>
               </li>
               <li>
                 <a href="#impact-stats" style={{ color: '#cbd5e1', textDecoration: 'none' }}>
-                  पायलट प्रभाव आंकड़े / Pilot Metrics
+                  {t.footerImpact}
                 </a>
               </li>
               <li>
                 <a href="/officer/login" style={{ color: '#ff9933', textDecoration: 'none', fontWeight: 600 }}>
-                  अधिकारी लॉगिन / Officer Command Portal
+                  {t.footerOfficerPortal}
                 </a>
               </li>
             </ul>
@@ -121,7 +124,7 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
                 marginBottom: '14px',
               }}
             >
-              संबंधित राष्ट्रीय पोर्टल / Related Portals
+              {t.footerFrameworkTitle}
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <li>
@@ -154,7 +157,7 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
                 marginBottom: '14px',
               }}
             >
-              सुगमता एवं सहायता / Grievance Desk
+              {t.footerGovernanceTitle}
             </div>
             <p style={{ fontSize: '12.5px', color: '#94a3b8', margin: 0, marginBottom: '10px' }}>
               भारत सरकार वेबसाइट दिशानिर्देश (GIGW 3.0) एवं WCAG 2.1 AA मानकों के अनुरूप।
@@ -178,9 +181,7 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
             lineHeight: 1.6,
           }}
         >
-          <strong>अस्वीकरण / Legal Disclaimer:</strong> जीविका मैप (Jeevika Map) पीएम-अजय योजना के तहत विकसित
-          एक विशिष्ट आजीविका आसूचना एवं एनएसक्यूएफ अनुशंसा मंच है। सभी व्यावसायिक प्रोफाइल और कौशल योग्यता
-          मानक आधिकारिक NCVET राष्ट्रीय व्यावसायिक मानकों (NOS) पर आधारित हैं।
+          <strong>{t.footerDisclaimersTitle}:</strong> {t.footerDisclaimerText}
         </div>
 
         {/* Bottom Strip: Copyright and Compliance */}
@@ -198,7 +199,7 @@ export const Footer: React.FC<FooterProps> = ({ isHighContrast = false }) => {
           }}
         >
           <div>
-            © {new Date().getFullYear()} जीविका मैप (Jeevika Map) • सामाजिक न्याय एवं अधिकारिता मंत्रालय, भारत सरकार।
+            {t.footerCopyright}
           </div>
           <div style={{ display: 'flex', gap: '16px' }}>
             <span style={{ color: '#94a3b8' }}>गोपनीयता नीति (Privacy)</span>

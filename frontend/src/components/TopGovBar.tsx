@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from '../i18n/useTranslation';
+import type { SupportedLanguage } from '../i18n/translations';
 
 interface TopGovBarProps {
   fontScale: number;
@@ -17,6 +19,8 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
   currentLang,
   setCurrentLang,
 }) => {
+  const { t } = useTranslation();
+
   const handleScaleDecrease = () => {
     setFontScale((prev) => Math.max(0.85, parseFloat((prev - 0.05).toFixed(2))));
   };
@@ -63,7 +67,7 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
               color: isHighContrast ? '#ffffff' : '#0f172a',
             }}
           >
-            भारत सरकार | Government of India
+            {t.govIndia}
           </span>
           <span
             style={{
@@ -79,7 +83,7 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
               fontWeight: 500,
             }}
           >
-            सामाजिक न्याय एवं अधिकारिता मंत्रालय (पीएम-अजय) • Ministry of Social Justice & Empowerment
+            {t.govMinistry}
           </span>
         </div>
 
@@ -91,7 +95,7 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
             className="sr-skip-link"
             style={{ color: '#ffffff' }}
           >
-            मुख्य सामग्री पर जाएँ (Skip to Main Content)
+            {t.skipToMain}
           </a>
 
           {/* Font Resizing Controls */}
@@ -105,7 +109,7 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
             }}
           >
             <span style={{ fontSize: '11px', color: isHighContrast ? '#d1d5db' : '#64748b', marginRight: '4px' }}>
-              अक्षर आकार / Text Size:
+              {t.textSize}
             </span>
             <button
               type="button"
@@ -187,7 +191,7 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
                 border: `1px solid ${isHighContrast ? '#ff9933' : '#cbd5e1'}`,
               }}
             />
-            {isHighContrast ? 'सामान्य दृश्य (Standard)' : 'कंट्रास्ट दृश्य (Contrast)'}
+            {isHighContrast ? t.contrastHigh : t.contrastStandard}
           </button>
 
           {/* Language Selector */}
@@ -196,12 +200,12 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
               htmlFor="gov-language-select"
               style={{ fontSize: '11px', color: isHighContrast ? '#d1d5db' : '#64748b' }}
             >
-              भाषा / Lang:
+              {t.langLabel}
             </label>
             <select
               id="gov-language-select"
               value={currentLang}
-              onChange={(e) => setCurrentLang(e.target.value)}
+              onChange={(e) => setCurrentLang(e.target.value as SupportedLanguage)}
               style={{
                 fontSize: '11.5px',
                 padding: '2px 6px',
@@ -216,9 +220,8 @@ export const TopGovBar: React.FC<TopGovBarProps> = ({
               <option value="en">English</option>
               <option value="hi">हिन्दी (Hindi)</option>
               <option value="mr">मराठी (Marathi)</option>
-              <option value="bn">বাংলা (Bengali)</option>
               <option value="te">తెలుగు (Telugu)</option>
-              <option value="ta">தமிழ் (Tamil)</option>
+              <option value="bn">বাংলা (Bengali)</option>
             </select>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from '../i18n/useTranslation';
 
 interface LivelihoodPathwayVisualizerProps {
   isHighContrast?: boolean;
@@ -132,6 +133,7 @@ const PERSONAS: PersonaData[] = [
 export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerProps> = ({
   isHighContrast = false,
 }) => {
+  const { t } = useTranslation();
   const [activePersonaId, setActivePersonaId] = useState<string>('artisan');
 
   const selectedPersona = PERSONAS.find((p) => p.id === activePersonaId) || PERSONAS[0];
@@ -150,7 +152,7 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
         {/* Section Header */}
         <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 36px' }}>
           <span className="jm-badge jm-badge-green" style={{ marginBottom: '10px' }}>
-            इंटरएक्टिव आजीविका आसूचना / Interactive Livelihood Intelligence
+            {t.visBadge}
           </span>
           <h2
             id="livelihood-vis-title"
@@ -161,10 +163,10 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
               marginBottom: '6px',
             }}
           >
-            लाभार्थी से एनएसक्यूएफ मार्ग अभिसरण
+            {t.visTitle}
           </h2>
           <div style={{ fontSize: '15px', fontWeight: 600, color: isHighContrast ? '#ff9933' : '#c2410c', marginBottom: '10px' }}>
-            Beneficiary to NSQF Pathway Convergence
+            {t.visSubtitle}
           </div>
           <p
             style={{
@@ -173,15 +175,14 @@ export const LivelihoodPathwayVisualizer: React.FC<LivelihoodPathwayVisualizerPr
               lineHeight: 1.6,
             }}
           >
-            देखें कि कैसे जीविका मैप जमीनी स्तर के पारंपरिक हुनर को प्रमाणित एनएसक्यूएफ योग्यता पैक,
-            क्लस्टर बाजार मांग और पीएम-अजय टूलकिट सब्सिडी से जोड़ता है।
+            {t.visDesc}
           </p>
         </div>
 
         {/* Persona Selector Tabs */}
         <div
           role="tablist"
-          aria-label="Beneficiary Personas"
+          aria-label={t.visSelectLabel}
           style={{
             display: 'flex',
             flexWrap: 'wrap',

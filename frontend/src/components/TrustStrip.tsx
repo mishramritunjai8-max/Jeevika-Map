@@ -1,18 +1,18 @@
 import React from 'react';
+import { useTranslation } from '../i18n/useTranslation';
 
 interface TrustStripProps {
   isHighContrast?: boolean;
 }
 
 export const TrustStrip: React.FC<TrustStripProps> = ({ isHighContrast = false }) => {
+  const { t } = useTranslation();
+
   const pillars = [
     {
-      badgeHi: 'शासनादेश',
-      badgeEn: 'Mandate',
-      titleHi: 'पीएम-अजय अभिसरण',
-      titleEn: 'PM-AJAY Convergence',
-      description:
-        'सामाजिक न्याय एवं अधिकारिता मंत्रालय अंतर्गत अनुसूचित जाति (SC) परिवारों के समग्र आजीविका संवर्धन हेतु लक्षित रूपरेखा।',
+      badge: t.pillar1Badge,
+      title: t.pillar1Title,
+      description: t.pillar1Desc,
       icon: (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -21,12 +21,9 @@ export const TrustStrip: React.FC<TrustStripProps> = ({ isHighContrast = false }
       accentColor: '#c2410c',
     },
     {
-      badgeHi: 'आसूचना',
-      badgeEn: 'Intelligence',
-      titleHi: 'जिला आजीविका मैपिंग',
-      titleEn: 'District Livelihood Mapping',
-      description:
-        'स्थानीय संसाधन क्लस्टर, कच्चे माल, पारंपरिक कौशल एवं वास्तविक बाजार मांग का सूक्ष्म स्तरीय विश्लेषण।',
+      badge: t.pillar2Badge,
+      title: t.pillar2Title,
+      description: t.pillar2Desc,
       icon: (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
@@ -37,12 +34,9 @@ export const TrustStrip: React.FC<TrustStripProps> = ({ isHighContrast = false }
       accentColor: '#0c2340',
     },
     {
-      badgeHi: 'मानकीकरण',
-      badgeEn: 'Standardization',
-      titleHi: 'एनसीवीईटी / एनएसक्यूएफ मानक',
-      titleEn: 'NCVET / NSQF Alignment',
-      description:
-        'सभी कार्य भूमिकाएं राष्ट्रीय कौशल योग्यता फ्रेमवर्क (Level 1 से 8) एवं सरकारी प्रमाणपत्रों से जुड़ी हैं।',
+      badge: t.pillar3Badge,
+      title: t.pillar3Title,
+      description: t.pillar3Desc,
       icon: (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
@@ -52,12 +46,9 @@ export const TrustStrip: React.FC<TrustStripProps> = ({ isHighContrast = false }
       accentColor: '#15803d',
     },
     {
-      badgeHi: 'समावेशन',
-      badgeEn: 'Inclusion',
-      titleHi: 'बहुभाषी एवं आवाज-प्रथम',
-      titleEn: 'Multilingual & Voice First',
-      description:
-        'जमीनी प्रगणकों एवं ग्रामीण शिक्षार्थियों हेतु सहज हिंदी इंटरफेस एवं आवाज आधारित प्रविष्टि (Voice Input)।',
+      badge: t.pillar4Badge,
+      title: t.pillar4Title,
+      description: t.pillar4Desc,
       icon: (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
@@ -127,7 +118,7 @@ export const TrustStrip: React.FC<TrustStripProps> = ({ isHighContrast = false }
                     color: isHighContrast ? '#d1d5db' : '#64748b',
                   }}
                 >
-                  {item.badgeHi} <span style={{ fontSize: '10px', opacity: 0.8 }}>({item.badgeEn})</span>
+                  {item.badge}
                 </span>
               </div>
 
@@ -136,21 +127,11 @@ export const TrustStrip: React.FC<TrustStripProps> = ({ isHighContrast = false }
                   fontSize: '15.5px',
                   fontWeight: 700,
                   color: isHighContrast ? '#ffffff' : '#0c2340',
-                  marginBottom: '2px',
-                }}
-              >
-                {item.titleHi}
-              </h2>
-              <div
-                style={{
-                  fontSize: '11.5px',
-                  color: isHighContrast ? '#9ca3af' : '#64748b',
-                  fontWeight: 600,
                   marginBottom: '8px',
                 }}
               >
-                {item.titleEn}
-              </div>
+                {item.title}
+              </h2>
 
               <p
                 style={{
