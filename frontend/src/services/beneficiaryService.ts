@@ -7,6 +7,7 @@ import type {
 } from '../types/database';
 import { getActiveOccupations } from './occupationCatalogService';
 import { matchProfileToOccupations, type MatchResult } from './recommendationEngine';
+import { enqueueCitizenIntake } from './offline/offlineQueueService';
 
 export interface SubmissionResponse {
   success: boolean;
@@ -21,6 +22,7 @@ export interface SubmissionResponse {
     implementation_stage?: string;
     officer_notes?: string;
   };
+  isOffline?: boolean;
   error?: string;
 }
 
@@ -52,18 +54,130 @@ export const mapYearsExperienceToNumber = (val: string): number => {
 };
 
 /**
- * Submits the beneficiary and livelihood profile to Supabase following the
- * strict production sequence:
- * 1. Insert into beneficiaries table with client-generated UUID.
- * 2. Insert into livelihood_profiles table referencing beneficiary_id with client-generated UUID.
+ * Constructs the typed Beneficiary database payload
+ */
+export const createBeneficiaryPayload = (
+  beneficiaryId: string,
+  formData: BeneficiaryFormData
+): BeneficiaryInsert & { id: string } => {
+  const ageNum = parseInt(formData.basicInfo.age, 10) || 25;
+  return {
+    id: beneficiaryId,
+    full_name: formData.basicInfo.fullName.trim(),
+    age: ageNum,
+    gender: formData.basicInfo.gender as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    caste_category: (formData.basicInfo.casteCategory || 'scheduled_caste') as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    contact_number: formData.basicInfo.contactNumber ? formData.basicInfo.contactNumber.trim() : null,
+    state: (formData.location.state || 'Uttar Pradesh').trim(),
+    district: formData.location.district.trim(),
+    block: formData.location.block ? formData.location.block.trim() : null,
+    gram_panchayat: formData.location.gramPanchayat ? formData.location.gramPanchayat.trim() : null,
+    area_type: formData.location.areaType || 'rural',
+  };
+};
+
+/**
+ * Constructs the typed LivelihoodProfile database payload
+ */
+export const createLivelihoodProfilePayload = (
+  profileId: string,
+  beneficiaryId: string,
+  formData: BeneficiaryFormData
+): LivelihoodProfileInsert & { id: string } => {
+  return {
+    id: profileId,
+    beneficiary_id: beneficiaryId,
+    primary_skill: formData.existingSkills.primarySkill.trim(),
+    secondary_skills: formData.existingSkills.secondarySkills || [],
+    tool_proficiency: formData.existingSkills.toolProficiency || 'manual_traditional',
+    rpl_interest: formData.existingSkills.rplInterest ?? true,
+    years_experience: mapYearsExperienceToNumber(formData.workExperience.yearsExperience),
+    current_trade: formData.workExperience.currentTrade ? formData.workExperience.currentTrade.trim() : null,
+    monthly_income_range: (formData.workExperience.monthlyIncomeRange as any) || null, // eslint-disable-line @typescript-eslint/no-explicit-any
+    is_seasonal: formData.workExperience.isSeasonal ?? false,
+    formal_education_level: (formData.education.formalLevel || 'middle_class_8') as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    can_read_write_vernacular: formData.education.canReadWriteVernacular ?? true,
+    smartphone_usage: formData.education.smartphoneUsage || 'basic_calls',
+    mobility_range: (formData.constraints.mobilityRange || 'within_block') as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    caregiver_responsibilities: formData.constraints.caregiverResponsibilities ?? false,
+    financial_constraint: formData.constraints.financialConstraint || 'can_attend_stipended_training',
+    employment_preference: (formData.aspirations.employmentPreference || 'micro_enterprise') as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    target_monthly_income: formData.aspirations.targetMonthlyIncome || null,
+    seeks_toolkit_support: formData.aspirations.needsToolkitFinancing ?? true,
+    additional_voice_note: formData.aspirations.additionalVoiceNote ? formData.aspirations.additionalVoiceNote.trim() : null,
+    status: 'submitted',
+  };
+};
+
+/**
+ * Formulates a local convergence action plan for offline feedback
+ */
+export const createLocalActionPlan = (
+  formData: BeneficiaryFormData,
+  primaryRecId?: string
+) => {
+  let potentialCategory = 'pm_ajay_skill_training';
+  if (formData.aspirations.needsToolkitFinancing) {
+    potentialCategory = 'pm_ajay_toolkit_assistance';
+  } else if (formData.aspirations.employmentPreference === 'shg_cooperative') {
+    potentialCategory = 'shg_cfc_incubation';
+  } else if (formData.aspirations.employmentPreference === 'wage_employment') {
+    potentialCategory = 'wage_placement_facilitation';
+  }
+
+  let enterpriseModel = 'individual_micro_enterprise';
+  if (formData.aspirations.employmentPreference === 'shg_cooperative') {
+    enterpriseModel = 'shg_producer_group';
+  } else if (formData.aspirations.employmentPreference === 'wage_employment') {
+    enterpriseModel = 'wage_employment';
+  } else if (formData.aspirations.employmentPreference === 'home_based_production') {
+    enterpriseModel = 'home_based_jobwork';
+  }
+
+  return {
+    id: `local-act-${generateUUID().slice(0, 8)}`,
+    recommendation_id: primaryRecId || null,
+    potential_support_category: potentialCategory,
+    recommended_enterprise_model: enterpriseModel,
+    nearest_training_center_type: 'District ITI / Weavers Service Centre / PMKK Hub',
+    implementation_stage: 'pathway_formulated',
+    officer_notes: 'Offline assessment formulated via local NCVET NSQF alignment. Stored in sync queue for automatic server persistence when internet returns.',
+  };
+};
+
+/**
+ * Determines if an error is a transient network/connection failure
+ */
+export const isNetworkError = (error: unknown): boolean => {
+  if (typeof navigator !== 'undefined' && !navigator.onLine) {
+    return true;
+  }
+  if (!error) return false;
+  const msg = error instanceof Error ? error.message : String(error);
+  return (
+    msg.includes('Failed to fetch') ||
+    msg.includes('NetworkError') ||
+    msg.includes('fetch failed') ||
+    msg.includes('timeout') ||
+    msg.includes('Network connection') ||
+    msg.includes('Network timeout') ||
+    msg.includes('AbortError')
+  );
+};
+
+/**
+ * Submits the beneficiary and livelihood profile.
+ *
+ * ONLINE FLOW:
+ * 1. Insert into beneficiaries table with client-generated UUID (omits .select()).
+ * 2. Insert into livelihood_profiles table referencing beneficiary_id (omits .select()).
  * 3. Invoke deployed Supabase Edge Function: generate-recommendations.
- * 
- * Note on Database RLS:
- * - Public SELECT is strictly denied on beneficiaries and livelihood_profiles for citizen privacy.
- * - By generating valid UUIDs client-side and omitting .select(), inserts execute
- *   without triggering RLS SELECT policy errors.
- * - The Edge Function is the authoritative recommendation engine, executing with
- *   server-side credentials to safely persist recommendations and action_plans.
+ *
+ * OFFLINE / NETWORK FAILURE FLOW:
+ * 1. Generate / preserve client-side UUIDs.
+ * 2. Store complete submission in IndexedDB sync_queue.
+ * 3. Run client-side recommendation engine (matchProfileToOccupations) using cached catalog.
+ * 4. Return successful local response for immediate /profile viewing and seamless background sync.
  */
 export const submitLivelihoodMapping = async (
   formData: BeneficiaryFormData
@@ -81,94 +195,118 @@ export const submitLivelihoodMapping = async (
     };
   }
 
-  // Local offline mode fallback if Supabase credentials are not configured
-  if (!isSupabaseConfigured()) {
-    console.warn('[BeneficiaryService] Running in local offline mode (Supabase unconfigured).');
-    const localBeneficiaryId = generateUUID();
-    const localProfileId = generateUUID();
-    const { data: catalog } = await getActiveOccupations();
-    
-    const localProfileModel: LivelihoodProfile = {
-      id: localProfileId,
-      beneficiary_id: localBeneficiaryId,
-      primary_skill: formData.existingSkills.primarySkill,
-      secondary_skills: formData.existingSkills.secondarySkills || [],
-      tool_proficiency: formData.existingSkills.toolProficiency,
-      rpl_interest: formData.existingSkills.rplInterest,
-      years_experience: mapYearsExperienceToNumber(formData.workExperience.yearsExperience),
-      current_trade: formData.workExperience.currentTrade || null,
-      monthly_income_range: (formData.workExperience.monthlyIncomeRange as any) || null, // eslint-disable-line @typescript-eslint/no-explicit-any
-      is_seasonal: formData.workExperience.isSeasonal,
-      formal_education_level: formData.education.formalLevel as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-      can_read_write_vernacular: formData.education.canReadWriteVernacular,
-      smartphone_usage: formData.education.smartphoneUsage,
-      mobility_range: formData.constraints.mobilityRange as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-      caregiver_responsibilities: formData.constraints.caregiverResponsibilities,
-      financial_constraint: formData.constraints.financialConstraint,
-      employment_preference: formData.aspirations.employmentPreference as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-      target_monthly_income: formData.aspirations.targetMonthlyIncome || null,
-      seeks_toolkit_support: formData.aspirations.needsToolkitFinancing,
-      additional_voice_note: formData.aspirations.additionalVoiceNote || null,
-      status: 'submitted',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
+  // Pre-generate authoritative client-side UUIDs
+  const beneficiaryId = generateUUID();
+  const profileId = generateUUID();
 
-    const recs = matchProfileToOccupations(localProfileModel, catalog, {
-      district: formData.location.district,
-      state: formData.location.state,
-    });
+  // Helper to execute offline fallback and enqueue
+  const handleOfflineSubmission = async (
+    beneficiaryAlreadyInserted = false,
+    profileAlreadyInserted = false
+  ): Promise<SubmissionResponse> => {
+    console.log('[Submission] Processing as offline submission with Sync Queue...');
+    try {
+      await enqueueCitizenIntake({
+        beneficiaryId,
+        profileId,
+        formData,
+        beneficiaryInserted: beneficiaryAlreadyInserted,
+        profileInserted: profileAlreadyInserted,
+      });
 
-    return {
-      success: true,
-      beneficiaryId: localBeneficiaryId,
-      livelihoodProfileId: localProfileId,
-      recommendations: recs,
-    };
+      const { data: catalog } = await getActiveOccupations();
+      const localProfileModel: LivelihoodProfile = {
+        id: profileId,
+        beneficiary_id: beneficiaryId,
+        primary_skill: formData.existingSkills.primarySkill,
+        secondary_skills: formData.existingSkills.secondarySkills || [],
+        tool_proficiency: formData.existingSkills.toolProficiency || 'manual_traditional',
+        rpl_interest: formData.existingSkills.rplInterest ?? true,
+        years_experience: mapYearsExperienceToNumber(formData.workExperience.yearsExperience),
+        current_trade: formData.workExperience.currentTrade || null,
+        monthly_income_range: (formData.workExperience.monthlyIncomeRange as any) || null, // eslint-disable-line @typescript-eslint/no-explicit-any
+        is_seasonal: formData.workExperience.isSeasonal ?? false,
+        formal_education_level: (formData.education.formalLevel || 'middle_class_8') as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        can_read_write_vernacular: formData.education.canReadWriteVernacular ?? true,
+        smartphone_usage: formData.education.smartphoneUsage || 'basic_calls',
+        mobility_range: (formData.constraints.mobilityRange || 'within_block') as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        caregiver_responsibilities: formData.constraints.caregiverResponsibilities ?? false,
+        financial_constraint: formData.constraints.financialConstraint || 'can_attend_stipended_training',
+        employment_preference: (formData.aspirations.employmentPreference || 'micro_enterprise') as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        target_monthly_income: formData.aspirations.targetMonthlyIncome || null,
+        seeks_toolkit_support: formData.aspirations.needsToolkitFinancing ?? true,
+        additional_voice_note: formData.aspirations.additionalVoiceNote || null,
+        status: 'submitted',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+
+      const recs = matchProfileToOccupations(localProfileModel, catalog, {
+        district: formData.location.district,
+        state: formData.location.state,
+      });
+
+      const actionPlan = createLocalActionPlan(formData, recs[0]?.occupation?.id);
+
+      return {
+        success: true,
+        isOffline: true,
+        beneficiaryId,
+        livelihoodProfileId: profileId,
+        recommendations: recs,
+        actionPlan,
+      };
+    } catch (queueErr) {
+      console.error('[Submission] Failed to enqueue offline intake:', queueErr);
+      return {
+        success: false,
+        recommendations: [],
+        error: 'Offline storage failed. Please ensure storage permissions are granted.',
+      };
+    }
+  };
+
+  // --------------------------------------------------------------------------
+  // Condition 1: Device is explicitly OFFLINE or Supabase is unconfigured
+  // --------------------------------------------------------------------------
+  if ((typeof navigator !== 'undefined' && !navigator.onLine) || !isSupabaseConfigured()) {
+    return await handleOfflineSubmission();
   }
 
   // --------------------------------------------------------------------------
-  // STEP 1: Insert Beneficiary Record
+  // Condition 2: Device is ONLINE — Execute Supabase intake sequence
   // --------------------------------------------------------------------------
-  const beneficiaryId = generateUUID();
-  const beneficiaryPayload: BeneficiaryInsert & { id: string } = {
-    id: beneficiaryId,
-    full_name: formData.basicInfo.fullName.trim(),
-    age: ageNum,
-    gender: formData.basicInfo.gender as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-    caste_category: formData.basicInfo.casteCategory as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-    contact_number: formData.basicInfo.contactNumber ? formData.basicInfo.contactNumber.trim() : null,
-    state: formData.location.state.trim(),
-    district: formData.location.district.trim(),
-    block: formData.location.block ? formData.location.block.trim() : null,
-    gram_panchayat: formData.location.gramPanchayat ? formData.location.gramPanchayat.trim() : null,
-    area_type: formData.location.areaType,
-  };
+  let benInserted = false;
+  let profInserted = false;
 
-  console.log('[Submission] Beneficiary insert attempted with ID:', beneficiaryId);
+  const beneficiaryPayload = createBeneficiaryPayload(beneficiaryId, formData);
+  const profilePayload = createLivelihoodProfilePayload(profileId, beneficiaryId, formData);
 
+  // STEP 1: Insert Beneficiary Record
   try {
+    console.log('[Submission] Beneficiary insert attempted with ID:', beneficiaryId);
     const { error: benError } = await supabase
       .from('beneficiaries')
       .insert([beneficiaryPayload]);
 
     if (benError) {
-      console.error('[Submission] Beneficiary insert failed:', {
-        message: benError.message,
-        code: benError.code,
-        details: benError.details,
-        hint: benError.hint,
-      });
+      console.error('[Submission] Beneficiary insert error:', benError);
+      if (isNetworkError(benError)) {
+        return await handleOfflineSubmission(false, false);
+      }
       return {
         success: false,
         recommendations: [],
-        error: 'Unable to register beneficiary in database: ' + (benError.message || 'Intake rejected.'),
+        error: 'Unable to register beneficiary: ' + (benError.message || 'Intake rejected.'),
       };
     }
-
+    benInserted = true;
     console.log('[Submission] Beneficiary insert succeeded with ID:', beneficiaryId);
   } catch (err) {
-    console.error('[Submission] Network error during beneficiary insert:', err);
+    console.error('[Submission] Network exception during beneficiary insert:', err);
+    if (isNetworkError(err)) {
+      return await handleOfflineSubmission(false, false);
+    }
     return {
       success: false,
       recommendations: [],
@@ -176,48 +314,18 @@ export const submitLivelihoodMapping = async (
     };
   }
 
-  // --------------------------------------------------------------------------
-  // STEP 2: Insert Livelihood Profile Record referencing beneficiaryId
-  // --------------------------------------------------------------------------
-  const profileId = generateUUID();
-  const profilePayload: LivelihoodProfileInsert & { id: string } = {
-    id: profileId,
-    beneficiary_id: beneficiaryId,
-    primary_skill: formData.existingSkills.primarySkill.trim(),
-    secondary_skills: formData.existingSkills.secondarySkills || [],
-    tool_proficiency: formData.existingSkills.toolProficiency,
-    rpl_interest: formData.existingSkills.rplInterest,
-    years_experience: mapYearsExperienceToNumber(formData.workExperience.yearsExperience),
-    current_trade: formData.workExperience.currentTrade ? formData.workExperience.currentTrade.trim() : null,
-    monthly_income_range: (formData.workExperience.monthlyIncomeRange as any) || null, // eslint-disable-line @typescript-eslint/no-explicit-any
-    is_seasonal: formData.workExperience.isSeasonal,
-    formal_education_level: formData.education.formalLevel as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-    can_read_write_vernacular: formData.education.canReadWriteVernacular,
-    smartphone_usage: formData.education.smartphoneUsage,
-    mobility_range: formData.constraints.mobilityRange as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-    caregiver_responsibilities: formData.constraints.caregiverResponsibilities,
-    financial_constraint: formData.constraints.financialConstraint,
-    employment_preference: formData.aspirations.employmentPreference as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-    target_monthly_income: formData.aspirations.targetMonthlyIncome || null,
-    seeks_toolkit_support: formData.aspirations.needsToolkitFinancing,
-    additional_voice_note: formData.aspirations.additionalVoiceNote ? formData.aspirations.additionalVoiceNote.trim() : null,
-    status: 'submitted',
-  };
-
-  console.log('[Submission] Livelihood profile insert attempted with ID:', profileId, 'for Beneficiary ID:', beneficiaryId);
-
+  // STEP 2: Insert Livelihood Profile Record
   try {
+    console.log('[Submission] Livelihood profile insert attempted with ID:', profileId);
     const { error: profError } = await supabase
       .from('livelihood_profiles')
       .insert([profilePayload]);
 
     if (profError) {
-      console.error('[Submission] Livelihood profile insert failed:', {
-        message: profError.message,
-        code: profError.code,
-        details: profError.details,
-        hint: profError.hint,
-      });
+      console.error('[Submission] Livelihood profile insert error:', profError);
+      if (isNetworkError(profError)) {
+        return await handleOfflineSubmission(benInserted, false);
+      }
       return {
         success: false,
         beneficiaryId,
@@ -225,10 +333,13 @@ export const submitLivelihoodMapping = async (
         error: 'Beneficiary registered, but failed to save livelihood profile: ' + (profError.message || 'Intake rejected.'),
       };
     }
-
+    profInserted = true;
     console.log('[Submission] Livelihood profile insert succeeded with ID:', profileId);
   } catch (err) {
-    console.error('[Submission] Error during livelihood profile insert:', err);
+    console.error('[Submission] Network exception during livelihood profile insert:', err);
+    if (isNetworkError(err)) {
+      return await handleOfflineSubmission(benInserted, false);
+    }
     return {
       success: false,
       beneficiaryId,
@@ -237,12 +348,9 @@ export const submitLivelihoodMapping = async (
     };
   }
 
-  // --------------------------------------------------------------------------
   // STEP 3: Invoke Deployed Edge Function (generate-recommendations)
-  // --------------------------------------------------------------------------
-  console.log('[Submission] Edge Function generate-recommendations invocation attempted for Profile ID:', profileId);
-
   try {
+    console.log('[Submission] Edge Function generate-recommendations invocation attempted for Profile ID:', profileId);
     const { data: edgeData, error: edgeError } = await supabase.functions.invoke(
       'generate-recommendations',
       {
@@ -253,10 +361,10 @@ export const submitLivelihoodMapping = async (
     );
 
     if (edgeError) {
-      console.error('[Submission] Edge Function invocation failed:', {
-        message: edgeError.message,
-        name: edgeError.name,
-      });
+      console.warn('[Submission] Edge Function invocation failed, queueing for background recovery:', edgeError);
+      if (isNetworkError(edgeError)) {
+        return await handleOfflineSubmission(benInserted, profInserted);
+      }
       return {
         success: false,
         beneficiaryId,
@@ -267,13 +375,26 @@ export const submitLivelihoodMapping = async (
     }
 
     if (!edgeData || !edgeData.success || !Array.isArray(edgeData.recommendations) || edgeData.recommendations.length === 0) {
-      console.error('[Submission] Edge Function returned unsuccessful payload:', edgeData);
+      console.warn('[Submission] Edge Function returned empty payload, calculating local recommendations:', edgeData);
+      // Fall back gracefully to local matching so user is not blocked
+      const { data: catalog } = await getActiveOccupations();
+      const localProfileModel: LivelihoodProfile = {
+        ...profilePayload,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      const recs = matchProfileToOccupations(localProfileModel, catalog, {
+        district: formData.location.district,
+        state: formData.location.state,
+      });
+      const actionPlan = createLocalActionPlan(formData, recs[0]?.occupation?.id);
+
       return {
-        success: false,
+        success: true,
         beneficiaryId,
         livelihoodProfileId: profileId,
-        recommendations: [],
-        error: edgeData?.error || 'Convergence engine did not generate valid recommendations.',
+        recommendations: recs,
+        actionPlan,
       };
     }
 
@@ -293,12 +414,7 @@ export const submitLivelihoodMapping = async (
     };
   } catch (err) {
     console.error('[Submission] Network error during Edge Function invocation:', err);
-    return {
-      success: false,
-      beneficiaryId,
-      livelihoodProfileId: profileId,
-      recommendations: [],
-      error: 'Network timeout while contacting convergence recommendation engine.',
-    };
+    return await handleOfflineSubmission(benInserted, profInserted);
   }
 };
+

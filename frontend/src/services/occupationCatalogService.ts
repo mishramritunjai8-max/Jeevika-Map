@@ -1,5 +1,9 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import type { OccupationCatalog } from '../types/database';
+import {
+  cacheOccupations,
+  getCachedOccupations,
+} from './offline/offlineCacheService';
 
 // Verified, authoritative NCVET / National Qualification Register reference records
 // Used when database has not yet been seeded or offline fallback is needed
@@ -104,13 +108,19 @@ export const OFFICIAL_PILOT_OCCUPATIONS: OccupationCatalog[] = [
 
 /**
  * Fetches active occupations strictly from the occupation_catalog table.
- * RLS enforces: SELECT allowed to anon/authenticated only when is_active = true.
+ * Online: Queries Supabase and caches fresh data into IndexedDB.
+ * Offline / Error: Falls back seamlessly to IndexedDB cache, then official reference catalog.
  */
 export const getActiveOccupations = async (): Promise<{
   data: OccupationCatalog[];
   error: string | null;
 }> => {
   if (!isSupabaseConfigured()) {
+    // Check IndexedDB cache first
+    const cached = await getCachedOccupations();
+    if (cached && cached.length > 0) {
+      return { data: cached, error: null };
+    }
     return { data: OFFICIAL_PILOT_OCCUPATIONS, error: null };
   }
 
@@ -122,17 +132,54 @@ export const getActiveOccupations = async (): Promise<{
       .order('nsqf_level', { ascending: true });
 
     if (error) {
-      console.warn('[OccupationCatalogService] Supabase fetch error, using official fallback:', error.message);
+      console.warn('[OccupationCatalogService] Supabase fetch error, attempting IndexedDB cache:', error.message);
+      const cached = await getCachedOccupations();
+      if (cached && cached.length > 0) {
+        return { data: cached, error: null };
+      }
       return { data: OFFICIAL_PILOT_OCCUPATIONS, error: null };
     }
 
     if (!data || data.length === 0) {
+      const cached = await getCachedOccupations();
+      if (cached && cached.length > 0) {
+        return { data: cached, error: null };
+      }
       return { data: OFFICIAL_PILOT_OCCUPATIONS, error: null };
     }
 
-    return { data: data as OccupationCatalog[], error: null };
+    const records = data as OccupationCatalog[];
+    // Asynchronously update IndexedDB cache with fresh authoritative data
+    cacheOccupations(records).catch((e) =>
+      console.warn('[OccupationCatalogService] Failed to cache occupations to IndexedDB:', e)
+    );
+
+    return { data: records, error: null };
   } catch (err) {
-    console.error('[OccupationCatalogService] Unexpected error:', err);
+    console.error('[OccupationCatalogService] Unexpected error, falling back to IndexedDB/catalog:', err);
+    const cached = await getCachedOccupations();
+    if (cached && cached.length > 0) {
+      return { data: cached, error: null };
+    }
     return { data: OFFICIAL_PILOT_OCCUPATIONS, error: null };
   }
 };
+
+/**
+ * Searches active occupations by query (works online and offline via IndexedDB)
+ */
+export const searchOccupations = async (query: string): Promise<OccupationCatalog[]> => {
+  const { data } = await getActiveOccupations();
+  if (!query || !query.trim()) return data;
+
+  const qLower = query.toLowerCase().trim();
+  return data.filter((occ) => {
+    return (
+      occ.job_role.toLowerCase().includes(qLower) ||
+      occ.qp_nos_code.toLowerCase().includes(qLower) ||
+      occ.sector_skill_council.toLowerCase().includes(qLower) ||
+      occ.description.toLowerCase().includes(qLower)
+    );
+  });
+};
+

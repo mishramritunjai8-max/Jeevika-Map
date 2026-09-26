@@ -17,6 +17,7 @@ interface SavedProfileWithMeta extends BeneficiaryFormData {
       implementation_stage?: string;
       officer_notes?: string;
     };
+    isOffline?: boolean;
     submittedAt?: string;
   };
 }
@@ -129,8 +130,8 @@ export const BeneficiaryProfilePage: React.FC = () => {
                   {savedProfile.meta.beneficiaryId || 'Registered'}
                 </code>
               </div>
-              <div style={{ marginLeft: 'auto', color: '#15803d', fontWeight: 600 }}>
-                🔒 Database RLS Protected
+              <div style={{ marginLeft: 'auto', color: savedProfile.meta?.isOffline ? '#c2410c' : '#15803d', fontWeight: 600 }}>
+                {savedProfile.meta?.isOffline ? '⚡ Saved offline — will sync when connected' : '🔒 Database RLS Protected'}
               </div>
             </div>
           )}

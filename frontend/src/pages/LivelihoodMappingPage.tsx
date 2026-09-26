@@ -159,6 +159,7 @@ export const LivelihoodMappingPage: React.FC = () => {
           livelihoodProfileId: result.livelihoodProfileId,
           recommendations: result.recommendations,
           actionPlan: result.actionPlan,
+          isOffline: Boolean(result.isOffline),
           submittedAt: new Date().toISOString(),
         },
       };

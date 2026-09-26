@@ -16,11 +16,13 @@ import { OfficerRegistryPage } from './pages/officer/OfficerRegistryPage';
 import { OfficerBeneficiaryDetailPage } from './pages/officer/OfficerBeneficiaryDetailPage';
 import { OfficerLoginPage } from './pages/officer/OfficerLoginPage';
 import { JeevikaSaathiChatbot } from './components/chat/JeevikaSaathiChatbot';
+import { OfflineStatusBar } from './components/OfflineStatusBar';
 
 export const App: React.FC = () => {
   return (
     <AccessibilityProvider>
       <OfficerAuthProvider>
+        <OfflineStatusBar />
         <BrowserRouter>
           <Routes>
             {/* Public Landing Page Route */}
