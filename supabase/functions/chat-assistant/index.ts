@@ -5,7 +5,7 @@
 // Purpose:
 // Hybrid AI Conversational Assistant.
 // 1. Answers general educational, career, conversational, and practical questions
-//    using Gemini's broad intelligence.
+//    using Groq's high-speed Llama-3 model intelligence.
 // 2. Grounded specifically in verified Jeevika Map data (NSQF catalog, PM-AJAY
 //    scheme guidelines) for official government livelihood queries.
 // 3. Multi-lingual support with automatic mirroring for Hindi, Hinglish, and English.
@@ -407,12 +407,12 @@ Deno.serve(async (req) => {
     // 2. Retrieve relevant grounded records matching user intent
     const matchedOccupations = findRelevantOccupations(userMessage, activeOccupations);
 
-    // 3. Check for Gemini API key
-    const geminiApiKey = Deno.env.get('GEMINI_API_KEY') || Deno.env.get('AI_API_KEY');
-    const aiModel = Deno.env.get('AI_MODEL') || 'gemini-2.5-flash';
+    // 3. Check for Groq API key
+    const groqApiKey = Deno.env.get('GROQ_API_KEY');
+    const groqModel = Deno.env.get('GROQ_MODEL') || 'llama-3.3-70b-versatile';
 
-    if (!geminiApiKey) {
-      console.warn('[ChatAssistant] GEMINI_API_KEY secret is not set in Supabase Edge Function environment.');
+    if (!groqApiKey) {
+      console.warn('[ChatAssistant] GROQ_API_KEY secret is not set in Supabase Edge Function environment.');
       const fallbackResult = buildDeterministicFallback(userMessage, matchedOccupations, langMode);
       return new Response(
         JSON.stringify({
@@ -446,19 +446,24 @@ CORE PRINCIPLES & INSTRUCTIONS:
      - If the user asks in English, reply in clean, accessible English.
    - Structure your answers with clear formatting, bullet points, and bold text for readability.`;
 
-    // 5. Build conversation payload for Google Gemini API
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${aiModel}:generateContent?key=${geminiApiKey}`;
+    // 5. Build conversation payload for Groq OpenAI-compatible Chat Completions API
+    const groqUrl = 'https://api.groq.com/openai/v1/chat/completions';
 
-    const rawContents: { role: 'user' | 'model'; parts: { text: string }[] }[] = [];
+    const messages: { role: 'system' | 'user' | 'assistant'; content: string }[] = [
+      {
+        role: 'system',
+        content: systemInstructionText,
+      },
+    ];
 
     // Add conversation history if available
     if (payload.history && Array.isArray(payload.history) && payload.history.length > 0) {
       const recentHistory = payload.history.slice(-8);
       for (const turn of recentHistory) {
         if (turn.content && turn.content.trim()) {
-          rawContents.push({
-            role: turn.role === 'assistant' ? 'model' : 'user',
-            parts: [{ text: turn.content.trim() }],
+          messages.push({
+            role: turn.role === 'assistant' ? 'assistant' : 'user',
+            content: turn.content.trim(),
           });
         }
       }
@@ -476,44 +481,28 @@ ${JSON.stringify(matchedOccupations, null, 2)}`;
       currentTurnText = `${contextText}\n\n[USER QUESTION]\n${userMessage}`;
     }
 
-    rawContents.push({
+    messages.push({
       role: 'user',
-      parts: [{ text: currentTurnText }],
+      content: currentTurnText,
     });
 
-    // Ensure valid alternating role sequence for Gemini API
-    const contents: { role: 'user' | 'model'; parts: { text: string }[] }[] = [];
-    for (const item of rawContents) {
-      if (contents.length > 0 && contents[contents.length - 1].role === item.role) {
-        contents[contents.length - 1].parts[0].text += `\n\n${item.parts[0].text}`;
-      } else {
-        contents.push(item);
-      }
-    }
-
-    // Ensure first message starts with 'user'
-    if (contents.length > 0 && contents[0].role !== 'user') {
-      contents.shift();
-    }
-
-    const aiRes = await fetch(geminiUrl, {
+    const aiRes = await fetch(groqUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Authorization': `Bearer ${groqApiKey}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
-        system_instruction: {
-          parts: [{ text: systemInstructionText }],
-        },
-        contents,
-        generationConfig: {
-          temperature: 0.5,
-          maxOutputTokens: 1000,
-        },
+        model: groqModel,
+        messages,
+        temperature: 0.5,
+        max_tokens: 1000,
       }),
     });
 
     if (!aiRes.ok) {
       const errText = await aiRes.text();
-      console.error('[ChatAssistant] Gemini API HTTP Error:', aiRes.status, errText);
+      console.error('[ChatAssistant] Groq API HTTP Error:', aiRes.status, errText);
       const fallbackResult = buildDeterministicFallback(userMessage, matchedOccupations, langMode);
       return new Response(
         JSON.stringify({
@@ -525,10 +514,10 @@ ${JSON.stringify(matchedOccupations, null, 2)}`;
     }
 
     const aiData = await aiRes.json();
-    const candidateText = aiData?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const candidateText = aiData?.choices?.[0]?.message?.content;
 
     if (!candidateText) {
-      console.warn('[ChatAssistant] Gemini returned empty text candidate:', JSON.stringify(aiData));
+      console.warn('[ChatAssistant] Groq returned empty text response:', JSON.stringify(aiData));
       const fallbackResult = buildDeterministicFallback(userMessage, matchedOccupations, langMode);
       return new Response(
         JSON.stringify({

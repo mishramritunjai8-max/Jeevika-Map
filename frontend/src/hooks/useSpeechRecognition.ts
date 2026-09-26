@@ -1,4 +1,11 @@
+// ==============================================================================
+// Hook: useSpeechRecognition
+// Browser Web Speech API SpeechRecognition integration for Jeevika Saathi
+// Supports English, Hindi, Marathi, Telugu, and Bengali
+// ==============================================================================
+
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { getSpeechLocale } from './useTextToSpeech';
 
 export type SpeechRecognitionStatus =
   | 'idle'
@@ -10,35 +17,36 @@ export type SpeechRecognitionStatus =
 interface SpeechRecognitionHookOptions {
   onResult?: (transcript: string) => void;
   lang?: string;
+  interimResults?: boolean;
 }
 
-// Browser Web Speech API type definitions for TypeScript
 interface IWindowWithSpeech extends Window {
   SpeechRecognition?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   webkitSpeechRecognition?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {}) => {
-  const isSupported = typeof window !== 'undefined' && (
-    'SpeechRecognition' in window || 'webkitSpeechRecognition' in window
-  );
+  const isSupported =
+    typeof window !== 'undefined' &&
+    ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window);
 
   const [status, setStatus] = useState<SpeechRecognitionStatus>(() =>
     isSupported ? 'idle' : 'unsupported'
   );
   const [transcript, setTranscript] = useState<string>('');
+  const [interimTranscript, setInterimTranscript] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const recognitionRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const onResultRef = useRef(options.onResult);
+  const isListeningRef = useRef(false);
 
   useEffect(() => {
     onResultRef.current = options.onResult;
   }, [options.onResult]);
 
   useEffect(() => {
-    if (!isSupported) {
-      return;
-    }
+    if (!isSupported) return;
 
     const win = window as unknown as IWindowWithSpeech;
     const SpeechRecognitionConstructor = win.SpeechRecognition || win.webkitSpeechRecognition;
@@ -46,10 +54,11 @@ export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {})
     try {
       const recognition = new SpeechRecognitionConstructor();
       recognition.continuous = false;
-      recognition.interimResults = false;
+      recognition.interimResults = options.interimResults ?? true;
       recognition.maxAlternatives = 1;
 
       recognition.onstart = () => {
+        isListeningRef.current = true;
         setStatus('listening');
         setErrorMessage(null);
       };
@@ -63,40 +72,65 @@ export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {})
       };
 
       recognition.onresult = (event: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-        const text = event.results?.[0]?.[0]?.transcript || '';
-        if (text) {
-          setTranscript(text);
-          setStatus('captured');
-          if (onResultRef.current) {
-            onResultRef.current(text);
+        let finalChunk = '';
+        let interimChunk = '';
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          const res = event.results[i];
+          const text = res[0]?.transcript || '';
+          if (res.isFinal) {
+            finalChunk += text;
+          } else {
+            interimChunk += text;
           }
-        } else {
-          setStatus('idle');
+        }
+
+        if (interimChunk) {
+          setInterimTranscript(interimChunk);
+        }
+
+        if (finalChunk) {
+          const trimmed = finalChunk.trim();
+          setTranscript(trimmed);
+          setInterimTranscript('');
+          setStatus('captured');
+
+          if (onResultRef.current) {
+            onResultRef.current(trimmed);
+          }
         }
       };
 
       recognition.onerror = (event: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-        console.warn('Speech recognition event error:', event.error);
-        if (event.error === 'not-allowed') {
-          setErrorMessage('Microphone access was denied. Please allow microphone permissions or use keyboard entry.');
-        } else if (event.error === 'no-speech') {
-          setErrorMessage('No speech was detected. Please try speaking again.');
-        } else {
-          setErrorMessage(`Speech recognition error: ${event.error}`);
+        isListeningRef.current = false;
+        const err = event.error;
+        console.warn('[useSpeechRecognition] Error event:', err);
+
+        if (err === 'not-allowed' || err === 'service-not-allowed') {
+          setErrorMessage('माइक्रोफ़ोन अनुमति आवश्यक है / Microphone permission is required to use voice input.');
+        } else if (err === 'no-speech') {
+          setErrorMessage('कोई आवाज़ नहीं सुनी गई / No speech was detected. Please try speaking again.');
+        } else if (err === 'network') {
+          setErrorMessage('नेटवर्क समस्या / Network issue communicating with speech service.');
+        } else if (err !== 'aborted') {
+          setErrorMessage(`आवाज़ पहचान त्रुटि / Speech recognition error: ${err}`);
         }
+
         setStatus('idle');
+        setInterimTranscript('');
       };
 
       recognition.onend = () => {
-        // Return to idle after a moment if captured
+        isListeningRef.current = false;
+        // Return smoothly to idle state
         setTimeout(() => {
           setStatus((prev) => (prev === 'captured' || prev === 'processing' ? 'idle' : prev));
-        }, 1500);
+        }, 1200);
       };
 
       recognitionRef.current = recognition;
     } catch (e) {
-      console.warn('Could not initialize SpeechRecognition:', e);
+      console.warn('[useSpeechRecognition] Initialization error:', e);
     }
 
     return () => {
@@ -104,42 +138,66 @@ export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {})
         try {
           recognitionRef.current.abort();
         } catch {
-          // Ignore abort exceptions on teardown
+          // Ignore abort on cleanup
         }
       }
     };
-  }, [isSupported]);
+  }, [isSupported, options.interimResults]);
 
-  const startListening = useCallback((langCode: string = 'hi-IN') => {
-    if (!isSupported || !recognitionRef.current) {
-      setStatus('unsupported');
-      return;
-    }
+  const startListening = useCallback(
+    (langCode: string = 'hi') => {
+      if (!isSupported) {
+        setStatus('unsupported');
+        setErrorMessage('इस ब्राउज़र में आवाज़ पहचान समर्थित नहीं है / Voice input is not supported in this browser.');
+        return;
+      }
 
-    setTranscript('');
-    setErrorMessage(null);
+      const recognition = recognitionRef.current;
+      if (!recognition) return;
 
-    try {
-      recognitionRef.current.lang = langCode;
-      recognitionRef.current.start();
-    } catch (e) {
-      console.warn('SpeechRecognition start error:', e);
-      setStatus('idle');
-    }
-  }, [isSupported]);
+      const speechLocale = getSpeechLocale(langCode);
+
+      setTranscript('');
+      setInterimTranscript('');
+      setErrorMessage(null);
+
+      try {
+        // If already listening, stop first
+        if (isListeningRef.current) {
+          try {
+            recognition.stop();
+          } catch {
+            // ignore
+          }
+        }
+
+        recognition.lang = speechLocale;
+        recognition.start();
+      } catch (e: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
+        console.warn('[useSpeechRecognition] Start listening error:', e);
+        // InvalidStateError means already started
+        if (e.name !== 'InvalidStateError') {
+          setStatus('idle');
+        }
+      }
+    },
+    [isSupported]
+  );
 
   const stopListening = useCallback(() => {
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
       } catch (e) {
-        console.warn('SpeechRecognition stop error:', e);
+        console.warn('[useSpeechRecognition] Stop error:', e);
       }
     }
+    isListeningRef.current = false;
   }, []);
 
   const reset = useCallback(() => {
     setTranscript('');
+    setInterimTranscript('');
     setErrorMessage(null);
     setStatus(isSupported ? 'idle' : 'unsupported');
   }, [isSupported]);
@@ -147,6 +205,7 @@ export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {})
   return {
     status,
     transcript,
+    interimTranscript,
     errorMessage,
     isSupported,
     startListening,

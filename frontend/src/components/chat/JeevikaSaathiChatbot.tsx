@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAccessibility } from '../../context/useAccessibility';
+import { useVoiceAssistant } from '../../hooks/useVoiceAssistant';
 import { sendChatMessage } from '../../services/chatService';
 import { ChatMessageItem } from './ChatMessageItem';
 import { ChatInputBar } from './ChatInputBar';
@@ -28,6 +29,17 @@ export const JeevikaSaathiChatbot: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([DEFAULT_WELCOME_MESSAGE]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const lastSpokenMsgIdRef = useRef<string | null>(null);
+
+  const {
+    isTtsSupported,
+    isSpeaking,
+    speakingId,
+    speakMessage,
+    stopSpeaking,
+    autoSpeak,
+    setAutoSpeak,
+  } = useVoiceAssistant();
 
   // Auto-scroll to bottom on new message
   useEffect(() => {
@@ -36,7 +48,32 @@ export const JeevikaSaathiChatbot: React.FC = () => {
     }
   }, [messages, isOpen, isLoading]);
 
+  // When chatbot closes, stop any active speech immediately
+  const handleClose = () => {
+    stopSpeaking();
+    setIsOpen(false);
+  };
+
+  // Auto-speak new assistant responses when autoSpeak is enabled
+  useEffect(() => {
+    if (!isOpen || !autoSpeak || !isTtsSupported || messages.length === 0) return;
+
+    const latestMessage = messages[messages.length - 1];
+    // Do not auto-speak welcome message on initial mount, only new assistant replies
+    if (
+      latestMessage.role === 'assistant' &&
+      latestMessage.id !== 'welcome-msg' &&
+      latestMessage.id !== lastSpokenMsgIdRef.current
+    ) {
+      lastSpokenMsgIdRef.current = latestMessage.id;
+      speakMessage(latestMessage.id, latestMessage.content);
+    }
+  }, [messages, isOpen, autoSpeak, isTtsSupported, speakMessage]);
+
   const handleSendMessage = async (text: string) => {
+    // If speaking when user sends a new message, stop speech immediately
+    stopSpeaking();
+
     const userMsg: ChatMessage = {
       id: `user-${Date.now()}`,
       role: 'user',
@@ -95,7 +132,7 @@ export const JeevikaSaathiChatbot: React.FC = () => {
           type="button"
           onClick={() => setIsOpen(true)}
           aria-label="Open Jeevika Saathi Chatbot"
-          title="जीविका साथी से पूछें (Ask Jeevika Saathi)"
+          title="जीविका साथी से पूछें (Ask Jeevika Saathi • Text & Voice)"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -121,6 +158,16 @@ export const JeevikaSaathiChatbot: React.FC = () => {
         >
           <span style={{ fontSize: '18px' }}>🤝</span>
           <span>Jeevika Saathi</span>
+          <span
+            title="Voice & Text Active"
+            style={{
+              fontSize: '13px',
+              display: 'inline-flex',
+              alignItems: 'center',
+            }}
+          >
+            🎙️
+          </span>
           <span
             style={{
               width: '8px',
@@ -212,37 +259,86 @@ export const JeevikaSaathiChatbot: React.FC = () => {
                   </span>
                 </div>
                 <div style={{ fontSize: '11px', color: '#93c5fd', marginTop: '1px' }}>
-                  आपकी आजीविका यात्रा में सहायक
+                  आपकी आजीविका यात्रा में सहायक (Voice & Text)
                 </div>
               </div>
             </div>
 
-            {/* Minimize/Close Button */}
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              aria-label="Close Chat"
-              title="बंद करें (Close)"
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#ffffff',
-                cursor: 'pointer',
-                padding: '4px 6px',
-                borderRadius: '6px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                opacity: 0.85,
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.85')}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
+            {/* Header Action Controls (Voice Mute/Unmute & Close) */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              {isTtsSupported && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (isSpeaking) {
+                      stopSpeaking();
+                    }
+                    setAutoSpeak((prev) => !prev);
+                  }}
+                  aria-label={autoSpeak ? 'Disable auto voice response' : 'Enable auto voice response'}
+                  title={
+                    autoSpeak
+                      ? 'आवाज़ उत्तर सक्रिय है (Auto-voice ON) • बंद करने के लिए क्लिक करें'
+                      : 'आवाज़ उत्तर बंद है (Auto-voice OFF) • चालू करने के लिए क्लिक करें'
+                  }
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: autoSpeak ? '#86efac' : '#94a3b8',
+                    cursor: 'pointer',
+                    padding: '4px 6px',
+                    borderRadius: '6px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '14px',
+                    opacity: 0.9,
+                    transition: 'all 0.15s ease',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.9')}
+                >
+                  {autoSpeak ? '🔊' : '🔇'}
+                </button>
+              )}
+
+              {/* Minimize/Close Button */}
+              <button
+                type="button"
+                onClick={handleClose}
+                aria-label="Close Chat"
+                title="बंद करें (Close)"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#ffffff',
+                  cursor: 'pointer',
+                  padding: '4px 6px',
+                  borderRadius: '6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  opacity: 0.85,
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.85')}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* Message List */}
@@ -260,6 +356,9 @@ export const JeevikaSaathiChatbot: React.FC = () => {
                 message={msg}
                 isHighContrast={isHighContrast}
                 onSelectAction={handleSendMessage}
+                isSpeaking={speakingId === msg.id}
+                onToggleSpeak={speakMessage}
+                isTtsSupported={isTtsSupported}
               />
             ))}
 

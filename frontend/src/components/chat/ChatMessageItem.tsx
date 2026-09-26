@@ -5,12 +5,18 @@ interface ChatMessageItemProps {
   message: ChatMessage;
   isHighContrast?: boolean;
   onSelectAction?: (actionText: string) => void;
+  isSpeaking?: boolean;
+  onToggleSpeak?: (messageId: string, text: string) => void;
+  isTtsSupported?: boolean;
 }
 
 export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
   message,
   isHighContrast = false,
   onSelectAction,
+  isSpeaking = false,
+  onToggleSpeak,
+  isTtsSupported = false,
 }) => {
   const [showWhy, setShowWhy] = useState<boolean>(false);
   const isUser = message.role === 'user';
@@ -25,7 +31,7 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
         maxWidth: '100%',
       }}
     >
-      {/* Speaker Label & Timestamp */}
+      {/* Speaker Label, Verification Tag, & TTS Controls */}
       <div
         style={{
           display: 'flex',
@@ -51,6 +57,82 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
           >
             सत्यापित डेटा (Verified Data)
           </span>
+        )}
+
+        {/* TTS Speak / Stop Button for Assistant Messages */}
+        {!isUser && isTtsSupported && onToggleSpeak && (
+          <button
+            type="button"
+            onClick={() => onToggleSpeak(message.id, message.content)}
+            aria-label={isSpeaking ? 'Stop speech' : 'Speak message aloud'}
+            title={isSpeaking ? 'आवाज़ रोकें (Stop speech)' : 'आवाज़ में सुनें (Speak message)'}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              marginLeft: '4px',
+              padding: '2px 7px',
+              borderRadius: '12px',
+              fontSize: '10.5px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: `1px solid ${
+                isSpeaking
+                  ? isHighContrast
+                    ? '#ef4444'
+                    : '#dc2626'
+                  : isHighContrast
+                  ? '#4b5563'
+                  : '#cbd5e1'
+              }`,
+              backgroundColor: isSpeaking
+                ? isHighContrast
+                  ? '#450a0a'
+                  : '#fef2f2'
+                : isHighContrast
+                ? '#1f2937'
+                : '#f8fafc',
+              color: isSpeaking
+                ? '#dc2626'
+                : isHighContrast
+                ? '#93c5fd'
+                : '#0c2340',
+              transition: 'all 0.15s ease',
+            }}
+          >
+            {isSpeaking ? (
+              <>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    backgroundColor: '#dc2626',
+                  }}
+                />
+                <span>⏹ रोकें (Stop)</span>
+              </>
+            ) : (
+              <>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                </svg>
+                <span>🔊 सुनें (Listen)</span>
+              </>
+            )}
+          </button>
         )}
       </div>
 
