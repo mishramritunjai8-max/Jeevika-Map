@@ -27,7 +27,7 @@ export const VoiceAssistantPanel: React.FC<VoiceAssistantPanelProps> = ({
   setCurrentStep,
 }) => {
   const { isHighContrast } = useAccessibility();
-  const [selectedLang, setSelectedLang] = useState<'hi-IN' | 'en-IN'>('hi-IN');
+  const [selectedLang, setSelectedLang] = useState<'auto' | 'hi-IN' | 'en-IN'>('hi-IN');
   const [isPanelOpen, setIsPanelOpen] = useState<boolean>(true);
   const [capturedTranscript, setCapturedTranscript] = useState<string>('');
   const [appliedNotice, setAppliedNotice] = useState<string | null>(null);
@@ -497,6 +497,22 @@ export const VoiceAssistantPanel: React.FC<VoiceAssistantPanelProps> = ({
                       }}
                     >
                       English (en-IN)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedLang('auto')}
+                      style={{
+                        padding: '4px 8px',
+                        borderRadius: '3px',
+                        fontSize: '11.5px',
+                        fontWeight: selectedLang === 'auto' ? 800 : 500,
+                        border: selectedLang === 'auto' ? '1.5px solid #0c2340' : '1px solid #cbd5e1',
+                        backgroundColor: selectedLang === 'auto' ? '#0c2340' : '#ffffff',
+                        color: selectedLang === 'auto' ? '#ffffff' : '#0c2340',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Auto (स्वतः)
                     </button>
                   </div>
                 </div>

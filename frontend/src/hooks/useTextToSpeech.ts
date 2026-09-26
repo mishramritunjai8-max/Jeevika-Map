@@ -47,20 +47,30 @@ export const cleanTextForSpeech = (rawText: string): string => {
 /**
  * Maps app language codes to preferred speech locales
  */
-export const getSpeechLocale = (langCode: string): string => {
-  switch (langCode) {
-    case 'hi':
-      return 'hi-IN';
-    case 'mr':
-      return 'mr-IN';
-    case 'te':
-      return 'te-IN';
-    case 'bn':
-      return 'bn-IN';
-    case 'en':
-    default:
-      return 'en-IN';
+export const getSpeechLocale = (langCode?: string): string => {
+  let code = langCode;
+  if (!code || code === 'auto') {
+    try {
+      const saved = localStorage.getItem('jeevika-language');
+      if (saved && saved !== 'auto') {
+        code = saved;
+      }
+    } catch {
+      // ignore storage access errors
+    }
   }
+
+  if (!code || code === 'auto') {
+    return 'hi-IN';
+  }
+
+  const clean = code.trim().toLowerCase().replace('_', '-');
+  if (clean.startsWith('hi')) return 'hi-IN';
+  if (clean.startsWith('mr')) return 'mr-IN';
+  if (clean.startsWith('te')) return 'te-IN';
+  if (clean.startsWith('bn')) return 'bn-IN';
+  if (clean.startsWith('en')) return 'en-IN';
+  return 'hi-IN';
 };
 
 export const useTextToSpeech = (

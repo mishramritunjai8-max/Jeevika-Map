@@ -145,7 +145,7 @@ export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {})
   }, [isSupported, options.interimResults]);
 
   const startListening = useCallback(
-    (langCode: string = 'hi') => {
+    (langCode?: string) => {
       if (!isSupported) {
         setStatus('unsupported');
         setErrorMessage('इस ब्राउज़र में आवाज़ पहचान समर्थित नहीं है / Voice input is not supported in this browser.');
@@ -155,7 +155,7 @@ export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {})
       const recognition = recognitionRef.current;
       if (!recognition) return;
 
-      const speechLocale = getSpeechLocale(langCode);
+      const speechLocale = getSpeechLocale(langCode || options.lang);
 
       setTranscript('');
       setInterimTranscript('');

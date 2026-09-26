@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSpeechRecognition, type SpeechRecognitionStatus } from '../../hooks/useSpeechRecognition';
 
 interface VoiceInputButtonProps {
@@ -14,6 +14,8 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
   isHighContrast = false,
   fieldLabel,
 }) => {
+  const [selectedLang, setSelectedLang] = useState<string>(language);
+
   const { status, transcript, errorMessage, isSupported, startListening, stopListening } =
     useSpeechRecognition({
       onResult: (capturedText) => {
@@ -25,7 +27,7 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
     if (status === 'listening') {
       stopListening();
     } else if (status === 'idle') {
-      startListening(language);
+      startListening(selectedLang);
     }
   };
 
@@ -96,35 +98,105 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
 
   return (
     <div style={{ marginTop: '8px', marginBottom: '8px' }}>
-      <button
-        type="button"
-        onClick={handleClick}
-        disabled={!isSupported || status === 'processing'}
-        aria-label={fieldLabel ? `Speak your answer for ${fieldLabel}` : 'Speak your answer'}
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '8px 14px',
-          borderRadius: '4px',
-          fontSize: '12.5px',
-          fontWeight: 600,
-          border: status === 'listening'
-            ? '1.5px solid #dc2626'
-            : `1px solid ${isHighContrast ? '#ff9933' : '#cbd5e1'}`,
-          backgroundColor: status === 'listening'
-            ? (isHighContrast ? '#450a0a' : '#fef2f2')
-            : (isHighContrast ? '#1f2937' : '#ffffff'),
-          color: status === 'listening'
-            ? '#dc2626'
-            : (isHighContrast ? '#ffffff' : '#0c2340'),
-          cursor: isSupported ? 'pointer' : 'not-allowed',
-          boxShadow: isHighContrast ? 'none' : '0 1px 2px rgba(0,0,0,0.04)',
-          transition: 'all 0.15s ease',
-        }}
-      >
-        {renderContent(status)}
-      </button>
+      <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+        <button
+          type="button"
+          onClick={handleClick}
+          disabled={!isSupported || status === 'processing'}
+          aria-label={fieldLabel ? `Speak your answer for ${fieldLabel}` : 'Speak your answer'}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '8px 14px',
+            borderRadius: '4px',
+            fontSize: '12.5px',
+            fontWeight: 600,
+            border: status === 'listening'
+              ? '1.5px solid #dc2626'
+              : `1px solid ${isHighContrast ? '#ff9933' : '#cbd5e1'}`,
+            backgroundColor: status === 'listening'
+              ? (isHighContrast ? '#450a0a' : '#fef2f2')
+              : (isHighContrast ? '#1f2937' : '#ffffff'),
+            color: status === 'listening'
+              ? '#dc2626'
+              : (isHighContrast ? '#ffffff' : '#0c2340'),
+            cursor: isSupported ? 'pointer' : 'not-allowed',
+            boxShadow: isHighContrast ? 'none' : '0 1px 2px rgba(0,0,0,0.04)',
+            transition: 'all 0.15s ease',
+          }}
+        >
+          {renderContent(status)}
+        </button>
+
+        {/* Compact Speech Language Selector */}
+        {isSupported && (
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              padding: '2px 4px',
+              borderRadius: '4px',
+              backgroundColor: isHighContrast ? '#1f2937' : '#f1f5f9',
+              border: `1px solid ${isHighContrast ? '#374151' : '#e2e8f0'}`,
+              fontSize: '11px',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setSelectedLang('hi-IN')}
+              title="हिन्दी में बोलें (Hindi Devanagari speech recognition)"
+              style={{
+                background: selectedLang === 'hi-IN' || selectedLang === 'hi' ? (isHighContrast ? '#374151' : '#ffffff') : 'transparent',
+                color: selectedLang === 'hi-IN' || selectedLang === 'hi' ? (isHighContrast ? '#ff9933' : '#0c2340') : (isHighContrast ? '#9ca3af' : '#64748b'),
+                border: selectedLang === 'hi-IN' || selectedLang === 'hi' ? '1px solid #cbd5e1' : 'none',
+                borderRadius: '3px',
+                padding: '2px 6px',
+                fontSize: '11px',
+                fontWeight: selectedLang === 'hi-IN' || selectedLang === 'hi' ? 700 : 500,
+                cursor: 'pointer',
+              }}
+            >
+              हिन्दी
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedLang('en-IN')}
+              title="Speak in English"
+              style={{
+                background: selectedLang === 'en-IN' || selectedLang === 'en' ? (isHighContrast ? '#374151' : '#ffffff') : 'transparent',
+                color: selectedLang === 'en-IN' || selectedLang === 'en' ? (isHighContrast ? '#ff9933' : '#0c2340') : (isHighContrast ? '#9ca3af' : '#64748b'),
+                border: selectedLang === 'en-IN' || selectedLang === 'en' ? '1px solid #cbd5e1' : 'none',
+                borderRadius: '3px',
+                padding: '2px 6px',
+                fontSize: '11px',
+                fontWeight: selectedLang === 'en-IN' || selectedLang === 'en' ? 700 : 500,
+                cursor: 'pointer',
+              }}
+            >
+              English
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedLang('auto')}
+              title="Auto detect based on app language"
+              style={{
+                background: selectedLang === 'auto' ? (isHighContrast ? '#374151' : '#ffffff') : 'transparent',
+                color: selectedLang === 'auto' ? (isHighContrast ? '#ff9933' : '#0c2340') : (isHighContrast ? '#9ca3af' : '#64748b'),
+                border: selectedLang === 'auto' ? '1px solid #cbd5e1' : 'none',
+                borderRadius: '3px',
+                padding: '2px 6px',
+                fontSize: '11px',
+                fontWeight: selectedLang === 'auto' ? 700 : 500,
+                cursor: 'pointer',
+              }}
+            >
+              Auto
+            </button>
+          </div>
+        )}
+      </div>
 
       {/* Error or Speech Feedback Banner */}
       {errorMessage && (
