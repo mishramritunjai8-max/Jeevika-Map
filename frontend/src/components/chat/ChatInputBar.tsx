@@ -86,7 +86,7 @@ export const ChatInputBar: React.FC<ChatInputBarProps> = ({
     if (isListening) {
       stopListening();
     } else {
-      startListening(currentLang || 'en');
+      startListening(currentLang || 'hi');
     }
   };
 

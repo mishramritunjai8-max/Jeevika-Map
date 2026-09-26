@@ -45,94 +45,8 @@ export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {})
     onResultRef.current = options.onResult;
   }, [options.onResult]);
 
+  // Cleanup on unmount
   useEffect(() => {
-    if (!isSupported) return;
-
-    const win = window as unknown as IWindowWithSpeech;
-    const SpeechRecognitionConstructor = win.SpeechRecognition || win.webkitSpeechRecognition;
-
-    try {
-      const recognition = new SpeechRecognitionConstructor();
-      recognition.continuous = false;
-      recognition.interimResults = options.interimResults ?? true;
-      recognition.maxAlternatives = 1;
-
-      recognition.onstart = () => {
-        isListeningRef.current = true;
-        setStatus('listening');
-        setErrorMessage(null);
-      };
-
-      recognition.onspeechstart = () => {
-        setStatus('listening');
-      };
-
-      recognition.onspeechend = () => {
-        setStatus('processing');
-      };
-
-      recognition.onresult = (event: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-        let finalChunk = '';
-        let interimChunk = '';
-
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          const res = event.results[i];
-          const text = res[0]?.transcript || '';
-          if (res.isFinal) {
-            finalChunk += text;
-          } else {
-            interimChunk += text;
-          }
-        }
-
-        if (interimChunk) {
-          setInterimTranscript(interimChunk);
-        }
-
-        if (finalChunk) {
-          const trimmed = finalChunk.trim();
-          setTranscript(trimmed);
-          setInterimTranscript('');
-          setStatus('captured');
-
-          if (onResultRef.current) {
-            onResultRef.current(trimmed);
-          }
-        }
-      };
-
-      recognition.onerror = (event: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-        isListeningRef.current = false;
-        const err = event.error;
-        console.warn('[useSpeechRecognition] Error event:', err);
-
-        if (err === 'not-allowed' || err === 'service-not-allowed') {
-          setErrorMessage('माइक्रोफ़ोन अनुमति आवश्यक है / Microphone permission is required to use voice input.');
-        } else if (err === 'no-speech') {
-          setErrorMessage('कोई आवाज़ नहीं सुनी गई / No speech was detected. Please try speaking again.');
-        } else if (err === 'network') {
-          setErrorMessage('नेटवर्क समस्या / Network issue communicating with speech service.');
-        } else if (err !== 'aborted') {
-          setErrorMessage(`आवाज़ पहचान त्रुटि / Speech recognition error: ${err}`);
-        }
-
-        setStatus('idle');
-        setInterimTranscript('');
-      };
-
-      recognition.onend = () => {
-        isListeningRef.current = false;
-        // Return smoothly to idle state
-        setTimeout(() => {
-          setStatus((prev) => (prev === 'captured' || prev === 'processing' ? 'idle' : prev));
-        }, 1200);
-      };
-
-      recognitionRef.current = recognition;
-    } catch (e) {
-      console.warn('[useSpeechRecognition] Initialization error:', e);
-    }
-
     return () => {
       if (recognitionRef.current) {
         try {
@@ -142,47 +56,7 @@ export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {})
         }
       }
     };
-  }, [isSupported, options.interimResults]);
-
-  const startListening = useCallback(
-    (langCode?: string) => {
-      if (!isSupported) {
-        setStatus('unsupported');
-        setErrorMessage('इस ब्राउज़र में आवाज़ पहचान समर्थित नहीं है / Voice input is not supported in this browser.');
-        return;
-      }
-
-      const recognition = recognitionRef.current;
-      if (!recognition) return;
-
-      const speechLocale = getSpeechLocale(langCode || options.lang);
-
-      setTranscript('');
-      setInterimTranscript('');
-      setErrorMessage(null);
-
-      try {
-        // If already listening, stop first
-        if (isListeningRef.current) {
-          try {
-            recognition.stop();
-          } catch {
-            // ignore
-          }
-        }
-
-        recognition.lang = speechLocale;
-        recognition.start();
-      } catch (e: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
-        console.warn('[useSpeechRecognition] Start listening error:', e);
-        // InvalidStateError means already started
-        if (e.name !== 'InvalidStateError') {
-          setStatus('idle');
-        }
-      }
-    },
-    [isSupported]
-  );
+  }, []);
 
   const stopListening = useCallback(() => {
     if (recognitionRef.current) {
@@ -194,6 +68,128 @@ export const useSpeechRecognition = (options: SpeechRecognitionHookOptions = {})
     }
     isListeningRef.current = false;
   }, []);
+
+  const startListening = useCallback(
+    (langCode?: string) => {
+      if (!isSupported) {
+        setStatus('unsupported');
+        setErrorMessage('इस ब्राउज़र में आवाज़ पहचान समर्थित नहीं है / Voice input is not supported in this browser.');
+        return;
+      }
+
+      // Abort any currently running recognition instance before creating a new one
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.abort();
+        } catch {
+          // Ignore
+        }
+        recognitionRef.current = null;
+      }
+
+      const win = window as unknown as IWindowWithSpeech;
+      const SpeechRecognitionConstructor = win.SpeechRecognition || win.webkitSpeechRecognition;
+      if (!SpeechRecognitionConstructor) {
+        setStatus('unsupported');
+        return;
+      }
+
+      const speechLocale = getSpeechLocale(langCode || options.lang || 'hi-IN');
+
+      setTranscript('');
+      setInterimTranscript('');
+      setErrorMessage(null);
+
+      try {
+        const recognition = new SpeechRecognitionConstructor();
+        recognition.continuous = false;
+        recognition.interimResults = options.interimResults ?? true;
+        recognition.maxAlternatives = 1;
+        // Explicitly assign the exact BCP-47 speech recognition language code
+        recognition.lang = speechLocale;
+
+        recognition.onstart = () => {
+          isListeningRef.current = true;
+          setStatus('listening');
+          setErrorMessage(null);
+        };
+
+        recognition.onspeechstart = () => {
+          setStatus('listening');
+        };
+
+        recognition.onspeechend = () => {
+          setStatus('processing');
+        };
+
+        recognition.onresult = (event: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+          let finalChunk = '';
+          let interimChunk = '';
+
+          for (let i = event.resultIndex; i < event.results.length; ++i) {
+            const res = event.results[i];
+            const text = res[0]?.transcript || '';
+            if (res.isFinal) {
+              finalChunk += text;
+            } else {
+              interimChunk += text;
+            }
+          }
+
+          if (interimChunk) {
+            setInterimTranscript(interimChunk);
+          }
+
+          if (finalChunk) {
+            const trimmed = finalChunk.trim();
+            setTranscript(trimmed);
+            setInterimTranscript('');
+            setStatus('captured');
+
+            if (onResultRef.current) {
+              onResultRef.current(trimmed);
+            }
+          }
+        };
+
+        recognition.onerror = (event: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+          isListeningRef.current = false;
+          const err = event.error;
+          console.warn('[useSpeechRecognition] Error event:', err);
+
+          if (err === 'not-allowed' || err === 'service-not-allowed') {
+            setErrorMessage('माइक्रोफ़ोन अनुमति आवश्यक है / Microphone permission is required to use voice input.');
+          } else if (err === 'no-speech') {
+            setErrorMessage('कोई आवाज़ नहीं सुनी गई / No speech was detected. Please try speaking again.');
+          } else if (err === 'network') {
+            setErrorMessage('नेटवर्क समस्या / Network issue communicating with speech service.');
+          } else if (err !== 'aborted') {
+            setErrorMessage(`आवाज़ पहचान त्रुटि / Speech recognition error: ${err}`);
+          }
+
+          setStatus('idle');
+          setInterimTranscript('');
+        };
+
+        recognition.onend = () => {
+          isListeningRef.current = false;
+          // Return smoothly to idle state
+          setTimeout(() => {
+            setStatus((prev) => (prev === 'captured' || prev === 'processing' ? 'idle' : prev));
+          }, 1200);
+        };
+
+        recognitionRef.current = recognition;
+        recognition.start();
+      } catch (e: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
+        console.warn('[useSpeechRecognition] Start listening error:', e);
+        if (e.name !== 'InvalidStateError') {
+          setStatus('idle');
+        }
+      }
+    },
+    [isSupported, options.interimResults, options.lang]
+  );
 
   const reset = useCallback(() => {
     setTranscript('');
